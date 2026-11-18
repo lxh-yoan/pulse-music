@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PulseMusic — Acceso y Panel</title>
+  <title>PulseMusic — Acceso Seguro y Panel</title>
   <style>
     :root {
       --bg-main: #09090b;
@@ -14,29 +14,34 @@
       --text-muted: #a1a1aa;
       --border: #27272a;
       --success: #10b981;
+      --danger: #f43f5e;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
     body { background-color: var(--bg-main); color: var(--text-main); min-height: 100vh; display: grid; place-items: center; padding: 20px; }
 
-    /* Pantalla de Login */
-    .login-container {
+    /* Pantallas */
+    .screen { display: none; width: 100%; max-width: 450px; }
+    .screen.active { display: block; }
+
+    .card {
       background-color: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 24px;
       padding: 40px 32px;
-      width: 100%;
-      max-width: 400px;
       box-shadow: 0 20px 40px rgba(0,0,0,0.6);
       text-align: center;
     }
+
     .logo-icon {
       width: 54px; height: 54px; border-radius: 16px;
       background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
       display: grid; place-items: center; font-size: 1.6rem; margin: 0 auto 20px;
     }
+
     h1 { font-size: 1.6rem; font-weight: 800; margin-bottom: 8px; }
-    p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 32px; }
+    p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 24px; }
+
     .login-options { display: flex; flex-direction: column; gap: 14px; }
     .btn-auth {
       display: flex; align-items: center; justify-content: center; gap: 12px;
@@ -46,87 +51,165 @@
     .btn-auth:hover { background-color: #2f2f3d; transform: translateY(-2px); }
     .btn-google { background-color: #ffffff; color: #000000; border-color: #ffffff; }
 
-    /* Panel de Admin (Oculto por defecto hasta iniciar sesión) */
-    .admin-panel {
-      display: none;
-      width: 100%;
-      max-width: 900px;
-      background-color: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 32px;
-    }
+    /* Panel de Admin Ampliado */
+    #adminPanel { max-width: 900px; text-align: left; }
     .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 10px; }
     .admin-badge { background: linear-gradient(135deg, var(--accent), var(--accent-secondary)); color: white; padding: 6px 14px; border-radius: 999px; font-size: 0.8rem; font-weight: 700; }
+    
     .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
     .stat-card { background-color: var(--bg-main); border: 1px solid var(--border); padding: 16px; border-radius: 14px; }
     .stat-card h3 { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px; }
     .stat-card .value { font-size: 1.5rem; font-weight: 800; }
-    .profile-box { background-color: var(--bg-main); border: 1px solid var(--border); padding: 20px; border-radius: 14px; margin-top: 20px; }
-    .profile-box input { width: 100%; padding: 10px; margin-top: 8px; margin-bottom: 14px; background: var(--bg-card); border: 1px solid var(--border); color: white; border-radius: 8px; }
-    .btn-save { background: var(--accent); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; }
+
+    .section-box { background-color: var(--bg-main); border: 1px solid var(--border); padding: 20px; border-radius: 14px; margin-bottom: 20px; }
+    .section-box h3 { font-size: 1rem; margin-bottom: 12px; }
+    
+    input { width: 100%; padding: 10px 14px; margin-top: 6px; margin-bottom: 14px; background: var(--bg-card); border: 1px solid var(--border); color: white; border-radius: 8px; outline: none; }
+    .btn-action { background: var(--accent); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; }
+    .btn-action:hover { opacity: 0.9; }
+
+    /* App de Música (Para usuarios normales) */
+    #musicApp { max-width: 900px; text-align: left; }
+    .track-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 16px; }
+    .track-card { background: var(--bg-main); border: 1px solid var(--border); padding: 16px; border-radius: 12px; }
   </style>
 </head>
 <body>
 
-  <!-- PANTALLA DE INICIO DE SESIÓN -->
-  <div id="loginScreen" class="login-container">
-    <div class="logo-icon">🎵</div>
-    <h1>PulseMusic</h1>
-    <p>Inicia sesión para continuar</p>
-    <div class="login-options">
-      <button class="btn-auth btn-google" onclick="entrar('Google')">Continuar con Google</button>
-      <button class="btn-auth" onclick="entrar('Gmail')">✉️ Continuar con Gmail</button>
-      <button class="btn-auth" onclick="entrar('Invitado')">👤 Entrar como Invitado</button>
+  <!-- 1. PANTALLA DE INICIO DE SESIÓN -->
+  <div id="screenLogin" class="screen active">
+    <div class="card">
+      <div class="logo-icon">🎵</div>
+      <h1>PulseMusic</h1>
+      <p>Inicia sesión para continuar</p>
+      
+      <div class="login-options">
+        <button class="btn-auth btn-google" onclick="simularLogin('google')">Continuar con Google</button>
+        <button class="btn-auth" onclick="simularLogin('gmail')">✉️ Continuar con Gmail</button>
+        <button class="btn-auth" onclick="simularLogin('invitado')">👤 Entrar como Invitado</button>
+      </div>
     </div>
   </div>
 
-  <!-- PANEL DE ADMINISTRADOR (EXCLUSIVO JOAN) -->
-  <div id="adminPanel" class="admin-panel">
-    <div class="admin-header">
-      <div>
-        <h2>🛡️ Panel de Control Admin</h2>
-        <p style="color: var(--text-muted);">Bienvenido, Joan</p>
+  <!-- 2. PANEL DE ADMINISTRADOR (SOLO PARA JOAN / ADMINS) -->
+  <div id="adminPanel" class="screen">
+    <div class="card" style="text-align: left;">
+      <div class="admin-header">
+        <div>
+          <h1>🛡️ Panel de Control Admin</h1>
+          <p id="adminWelcomeMsg" style="margin: 0; color: var(--text-muted);">Propietario verificado</p>
+        </div>
+        <div class="admin-badge">Rango: Admin Principal</div>
       </div>
-      <div class="admin-badge">Rol: Admin Principal</div>
-    </div>
 
-    <div class="stats-grid">
-      <div class="stat-card">
-        <h3>Usuarios Totales</h3>
-        <div class="value">1,248</div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <h3>Usuarios Registrados</h3>
+          <div class="value">1,248</div>
+        </div>
+        <div class="stat-card">
+          <h3>Estado del Sitio</h3>
+          <div class="value" style="color: var(--success); font-size: 1.2rem;">🟢 En Línea</div>
+        </div>
       </div>
-      <div class="stat-card">
-        <h3>Estado de la Web</h3>
-        <div class="value" style="color: var(--success); font-size: 1.2rem;">🟢 Activa en Vercel</div>
+
+      <div class="section-box">
+        <h3>⚙️ Gestionar Roles de Administrador</h3>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px;">Ingresa el correo de un usuario para otorgarle privilegios de administrador:</p>
+        <label>Correo del usuario:</label>
+        <input type="email" id="newAdminEmail" placeholder="usuario@correo.com">
+        <button class="btn-action" onclick="darAdmin()">Asignar Rango Admin</button>
+      </div>
+
+      <div class="section-box">
+        <h3>👤 Tu Perfil Personalizable</h3>
+        <label>Tu Nombre:</label>
+        <input type="text" id="adminName" value="Joan">
+        <button class="btn-action" onclick="guardarPerfil()">Guardar Cambios</button>
+      </div>
+
+      <button class="btn-auth" style="max-width: 180px; margin-top: 10px;" onclick="cerrarSesion()">🚪 Cerrar Sesión</button>
+    </div>
+  </div>
+
+  <!-- 3. APP DE MÚSICA (PARA USUARIOS / INVITADOS) -->
+  <div id="musicApp" class="screen">
+    <div class="card" style="text-align: left;">
+      <div class="admin-header">
+        <div>
+          <h1>🎧 PulseMusic - Explorar</h1>
+          <p id="userWelcomeMsg" style="margin: 0; color: var(--text-muted);">Disfruta de tu música</p>
+        </div>
+        <button class="btn-action" style="background: var(--danger); padding: 6px 14px; font-size: 0.8rem;" onclick="cerrarSesion()">Salir</button>
+      </div>
+
+      <p>Canciones recomendadas para ti:</p>
+      <div class="track-grid">
+        <div class="track-card">
+          <h4>Neon Lights</h4>
+          <p style="font-size: 0.8rem; color: var(--text-muted);">Cyber Pulse</p>
+        </div>
+        <div class="track-card">
+          <h4>Midnight Drive</h4>
+          <p style="font-size: 0.8rem; color: var(--text-muted);">The Wanderers</p>
+        </div>
       </div>
     </div>
-
-    <div class="profile-box">
-      <h3>👤 Perfil Personalizable (Admin)</h3>
-      <label>Tu Nombre de Admin:</label>
-      <input type="text" id="userName" value="Joan">
-      <button class="btn-save" onclick="guardar()">Guardar Cambios</button>
-    </div>
-
-    <button class="btn-auth" style="margin-top: 20px; max-width: 200px;" onclick="cerrarSesion()">🚪 Cerrar Sesión</button>
   </div>
 
   <script>
-    function entrar(metodo) {
-      alert("¡Acceso exitoso con " + metodo + "!");
-      document.getElementById('loginScreen').style.display = 'none';
-      document.getElementById('adminPanel').style.display = 'block';
+    // DEFINE AQUÍ TU CORREO DE DUEÑO (ADMIN PRINCIPAL)
+    const CORREO_OWNER = "joan@admin.com"; 
+
+    // Lista temporal de correos que también son admins (puedes agregar más aquí)
+    let adminsAdicionales = ["ayudante@admin.com"];
+
+    function simularLogin(tipo) {
+      let correoSimulado = "";
+      
+      if(tipo === 'google' || tipo === 'gmail') {
+        // Para pruebas desde el celular: si escribes tu correo o usas el botón, validamos
+        correoSimulado = prompt("Ingresa tu correo electrónico para iniciar sesión:", "joan@admin.com");
+      } else {
+        correoSimulado = "invitado@pulse.com";
+      }
+
+      if(!correoSimulado) return;
+
+      // Ocultar login
+      document.getElementById('screenLogin').classList.remove('active');
+
+      // Verificar si es Admin o Propietario
+      if(correoSimulado.toLowerCase() === CORREO_OWNER.toLowerCase() || adminsAdicionales.includes(correoSimulado.toLowerCase())) {
+        document.getElementById('adminPanel').classList.add('active');
+        document.getElementById('adminWelcomeMsg').innerText = "Sesión activa: " + correoSimulado;
+      } else {
+        // Usuario normal o invitado -> directo a la app de música
+        document.getElementById('musicApp').classList.add('active');
+        document.getElementById('userWelcomeMsg').innerText = "Conectado como: " + correoSimulado;
+      }
     }
 
-    function guardar() {
-      const nombre = document.getElementById('userName').value;
-      alert("¡Perfil actualizado con éxito para " + nombre + "!");
+    function darAdmin() {
+      const email = document.getElementById('newAdminEmail').value;
+      if(email) {
+        adminsAdicionales.push(email.toLowerCase());
+        alert("¡Listo, Joan! Ahora el usuario " + email + " tiene rango de administrador.");
+        document.getElementById('newAdminEmail').value = "";
+      } else {
+        alert("Por favor ingresa un correo válido.");
+      }
+    }
+
+    function guardarPerfil() {
+      const nombre = document.getElementById('adminName').value;
+      alert("¡Perfil actualizado con éxito, " + nombre + "!");
     }
 
     function cerrarSesion() {
-      document.getElementById('adminPanel').style.display = 'none';
-      document.getElementById('loginScreen').style.display = 'block';
+      document.getElementById('adminPanel').classList.remove('active');
+      document.getElementById('musicApp').classList.remove('active');
+      document.getElementById('screenLogin').classList.add('active');
     }
   </script>
 
