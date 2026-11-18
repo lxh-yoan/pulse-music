@@ -1,5 +1,6 @@
 // api/audius.js — Integración de Audius API para PulseMusic
-
+<script src="api/audius.js"></script>
+  <script src="app.js"></script>
 (function () {
   const AUDIUS_TOKEN = "2cc593fc814461263d282a84286fd4f72c79562e";
   const AUDIUS_BASE_URL = "https://api.audius.co/v1";
