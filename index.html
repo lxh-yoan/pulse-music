@@ -7,264 +7,281 @@
   <style>
     :root {
       --bg-main: #09090b;
+      --bg-sidebar: #111115;
       --bg-card: #18181f;
+      --bg-card-hover: #23232d;
+      --bg-player: rgba(17, 17, 21, 0.92);
       --accent: #8b5cf6;
+      --accent-hover: #a78bfa;
       --accent-secondary: #06b6d4;
       --text-main: #f4f4f5;
       --text-muted: #a1a1aa;
       --border: #27272a;
-      --success: #10b981;
       --danger: #f43f5e;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
-    body { background-color: var(--bg-main); color: var(--text-main); min-height: 100vh; }
-
-    .screen { display: none; padding: 20px; }
-    .screen.active { display: block; }
-
-    /* Login Styles */
-    .login-wrapper { display: grid; place-items: center; height: 100vh; }
-    .card {
-      background-color: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 40px 32px;
-      width: 100%; max-width: 420px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-      text-align: center;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .app-container {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .sidebar {
+      width: 240px;
+      background-color: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      flex-shrink: 0;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      padding: 0 8px;
+    }
+
     .logo-icon {
-      width: 54px; height: 54px; border-radius: 16px;
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
       background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
-      display: grid; place-items: center; font-size: 1.6rem; margin: 0 auto 20px;
+      display: grid;
+      place-items: center;
     }
-    h1 { font-size: 1.6rem; font-weight: 800; margin-bottom: 8px; }
-    p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 24px; }
-    .login-options { display: flex; flex-direction: column; gap: 14px; }
-    .btn-auth {
-      display: flex; align-items: center; justify-content: center; gap: 12px;
-      width: 100%; padding: 13px 20px; border-radius: 12px; border: 1px solid var(--border);
-      background-color: #23232d; color: var(--text-main); font-weight: 600; cursor: pointer; transition: 0.2s;
-    }
-    .btn-auth:hover { background-color: #2f2f3d; transform: translateY(-2px); }
-    .btn-google { background-color: #ffffff; color: #000000; border-color: #ffffff; }
 
-    /* Navbar superior en la App de Música */
+    .nav-section {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .nav-title {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      padding: 0 12px 6px;
+      font-weight: 700;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      color: var(--text-muted);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      text-align: left;
+      width: 100%;
+    }
+
+    .nav-item:hover {
+      color: var(--text-main);
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-item.active {
+      color: var(--text-main);
+      background: linear-gradient(90deg, rgba(139, 92, 246, 0.2), transparent);
+      border-left: 3px solid var(--accent);
+    }
+
+    .main-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px 32px 110px;
+      background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.12), transparent 40%),
+                  radial-gradient(circle at top left, rgba(6, 182, 212, 0.08), transparent 35%);
+    }
+
     .topbar {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 16px 24px; background-color: var(--bg-card); border-bottom: 1px solid var(--border);
-    }
-    .user-pill {
-      display: flex; align-items: center; gap: 10px; background: var(--bg-main);
-      padding: 6px 14px; border-radius: 999px; border: 1px solid var(--border); cursor: pointer;
-    }
-
-    /* Contenido de la Web de Música */
-    .main-container { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
-    .track-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 18px; margin-top: 16px; }
-    .track-card {
-      background-color: var(--bg-card); border: 1px solid var(--border);
-      padding: 16px; border-radius: 16px; cursor: pointer; transition: 0.2s;
-    }
-    .track-card:hover { transform: translateY(-3px); border-color: var(--accent); }
-
-    /* Modal de Perfil / Rol */
-    .modal-overlay {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.7); display: none; place-items: center; z-index: 100;
-    }
-    .modal-card {
-      background: var(--bg-card); border: 1px solid var(--border);
-      padding: 30px; border-radius: 20px; width: 90%; max-width: 400px; text-align: center;
-    }
-    .role-badge {
-      display: inline-block; padding: 6px 14px; border-radius: 999px;
-      font-size: 0.8rem; font-weight: 700; margin: 10px 0 20px; text-transform: uppercase;
-    }
-    .badge-admin { background: rgba(139, 92, 246, 0.2); color: #a78bfa; border: 1px solid var(--accent); }
-    .badge-user { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid var(--success); }
-    
-    input { width: 100%; padding: 10px 14px; margin-top: 6px; margin-bottom: 14px; background: var(--bg-main); border: 1px solid var(--border); color: white; border-radius: 8px; outline: none; }
-    .btn-action { background: var(--accent); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; width: 100%; margin-top: 8px; }
-    .btn-action:hover { opacity: 0.9; }
-
-    /* Panel de Administrador */
-    .admin-box { background: var(--bg-card); border: 1px solid var(--border); padding: 24px; border-radius: 20px; margin-top: 20px; }
-  </style>
-</head>
-<body>
-
-  <!-- 1. PANTALLA DE INICIO DE SESIÓN -->
-  <div id="screenLogin" class="screen login-wrapper active">
-    <div class="card">
-      <div class="logo-icon">🎵</div>
-      <h1>PulseMusic</h1>
-      <p>Inicia sesión para escuchar música</p>
-      <div class="login-options">
-        <button class="btn-auth btn-google" onclick="iniciarSesion('google')">Continuar con Google</button>
-        <button class="btn-auth" onclick="iniciarSesion('gmail')">✉️ Continuar con Gmail</button>
-        <button class="btn-auth" onclick="iniciarSesion('invitado')">👤 Entrar como Invitado</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- 2. APLICACIÓN PRINCIPAL DE MÚSICA -->
-  <div id="screenApp" class="screen">
-    <div class="topbar">
-      <div style="font-weight: 800; font-size: 1.2rem;">🎵 PulseMusic</div>
-      <div class="user-pill" onclick="abrirPerfil()">
-        <span id="navUserName">Joan</span>
-        <span style="font-size: 0.8rem;" id="navUserRoleEmoji">🛡️</span>
-      </div>
-    </div>
-
-    <div class="main-container">
-      <h2>Explorar Música y Éxitos</h2>
-      <p style="color: var(--text-muted); margin-bottom: 20px;">Disfruta de tus canciones favoritas en alta calidad</p>
-
-      <div class="track-grid">
-        <div class="track-card" onclick="alert('Reproduciendo: Neon Lights')">
-          <div style="font-size: 2rem; margin-bottom: 8px;">🎶</div>
-          <h4 style="font-size: 1rem; margin-bottom: 4px;">Neon Lights</h4>
-          <p style="font-size: 0.8rem; color: var(--text-muted);">Cyber Pulse</p>
-        </div>
-        <div class="track-card" onclick="alert('Reproduciendo: Midnight Drive')">
-          <div style="font-size: 2rem; margin-bottom: 8px;">🎸</div>
-          <h4 style="font-size: 1rem; margin-bottom: 4px;">Midnight Drive</h4>
-          <p style="font-size: 0.8rem; color: var(--text-muted);">The Wanderers</p>
-        </div>
-        <div class="track-card" onclick="alert('Reproduciendo: Deep Focus')">
-          <div style="font-size: 2rem; margin-bottom: 8px;">🎧</div>
-          <h4 style="font-size: 1rem; margin-bottom: 4px;">Deep Focus</h4>
-          <p style="font-size: 0.8rem; color: var(--text-muted);">Lofi Boy</p>
-        </div>
-      </div>
-
-      <!-- PANEL ADMIN (SOLO VISIBLE SI ERES ADMIN) -->
-      <div id="adminSection" class="admin-box" style="display: none;">
-        <h3 style="margin-bottom: 12px;">🛡️ Panel de Control de Administrador</h3>
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 14px;">Aquí puedes gestionar los roles de acceso de la web:</p>
-        
-        <label>Otorgar Admin a correo:</label>
-        <input type="email" id="targetEmail" placeholder="usuario@correo.com">
-        <button class="btn-action" onclick="darAdmin()">Dar Rango de Administrador</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- 3. VENTANA MODAL DE PERFIL Y ROL -->
-  <div id="profileModal" class="modal-overlay">
-    <div class="modal-card">
-      <h2>Tu Perfil</h2>
-      <div id="roleBadgeContainer"></div>
-
-      <div style="text-align: left; margin-top: 16px;">
-        <label style="font-size: 0.8rem; color: var(--text-muted);">Tu Correo:</label>
-        <p id="modalEmail" style="font-weight: 600; margin-bottom: 12px; font-size: 0.95rem;"></p>
-
-        <label style="font-size: 0.8rem; color: var(--text-muted);">Personalizar Nombre:</label>
-        <input type="text" id="inputProfileName" value="Joan">
-        
-        <button class="btn-action" onclick="guardarNombrePerfil()">Guardar Cambios</button>
-      </div>
-
-      <button class="btn-action" style="background: var(--border); margin-top: 12px;" onclick="cerrarPerfil()">Cerrar</button>
-      <button class="btn-action" style="background: var(--danger); margin-top: 8px;" onclick="cerrarSesion()">Cerrar Sesión</button>
-    </div>
-  </div>
-
-  <script>
-    // TU CORREO DE DUEÑO PRINCIPAL
-    const CORREO_OWNER = "joan@admin.com";
-    let listaAdmins = ["ayudante@admin.com"];
-
-    let usuarioActual = {
-      email: "",
-      nombre: "Joan",
-      esAdmin: false
-    };
-
-    function iniciarSesion(tipo) {
-      let correo = "";
-      if(tipo === 'google' || tipo === 'gmail') {
-        correo = prompt("Ingresa tu correo electrónico:", "joan@admin.com");
-      } else {
-        correo = "invitado@pulse.com";
-      }
-
-      if(!correo) return;
-
-      usuarioActual.email = correo.toLowerCase();
-      
-      // Comprobar si es Admin o Dueño
-      if(usuarioActual.email === CORREO_OWNER.toLowerCase() || listaAdmins.includes(usuarioActual.email)) {
-        usuarioActual.esAdmin = true;
-      } else {
-        usuarioActual.esAdmin = false;
-      }
-
-      // Actualizar interfaz principal de la app de música
-      document.getElementById('navUserName').innerText = usuarioActual.nombre;
-      document.getElementById('navUserRoleEmoji').innerText = usuarioActual.esAdmin ? "🛡️" : "🎧";
-
-      // Mostrar o ocultar panel admin dentro de la app
-      if(usuarioActual.esAdmin) {
-        document.getElementById('adminSection').style.display = 'block';
-      } else {
-        document.getElementById('adminSection').style.display = 'none';
-      }
-
-      // Cambiar de pantalla de login a la web de música
-      document.getElementById('screenLogin').classList.remove('active');
-      document.getElementById('screenApp').classList.add('active');
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
     }
 
-    function abrirPerfil() {
-      document.getElementById('modalEmail').innerText = usuarioActual.email;
-      document.getElementById('inputProfileName').value = usuarioActual.nombre;
-
-      const badgeContainer = document.getElementById('roleBadgeContainer');
-      if(usuarioActual.esAdmin) {
-        badgeContainer.innerHTML = `<span class="role-badge badge-admin">Rol: Administrador Principal / Owner</span>`;
-      } else {
-        badgeContainer.innerHTML = `<span class="role-badge badge-user">Rol: Usuario / Oyente</span>`;
-      }
-
-      document.getElementById('profileModal').style.display = 'grid';
+    .search-box {
+      position: relative;
+      flex: 1;
+      max-width: 420px;
     }
 
-    function cerrarPerfil() {
-      document.getElementById('profileModal').style.display = 'none';
+    .search-box svg {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
     }
 
-    function guardarNombrePerfil() {
-      const nuevoNombre = document.getElementById('inputProfileName').value;
-      if(nuevoNombre) {
-        usuarioActual.nombre = nuevoNombre;
-        document.getElementById('navUserName').innerText = nuevoNombre;
-        alert("¡Perfil actualizado con éxito!");
-        cerrarPerfil();
-      }
+    .search-box input {
+      width: 100%;
+      padding: 11px 16px 11px 42px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background-color: var(--bg-card);
+      color: var(--text-main);
+      font-size: 0.92rem;
+      outline: none;
+      transition: border-color 0.2s;
     }
 
-    function darAdmin() {
-      const correoDestino = document.getElementById('targetEmail').value;
-      if(correoDestino) {
-        listaAdmins.push(correoDestino.toLowerCase());
-        alert("¡Listo! El usuario " + correoDestino + " ahora es Administrador.");
-        document.getElementById('targetEmail').value = "";
-      } else {
-        alert("Ingresa un correo válido.");
-      }
+    .search-box input:focus {
+      border-color: var(--accent);
     }
 
-    function cerrarSesion() {
-      cerrarPerfil();
-      document.getElementById('screenApp').classList.remove('active');
-      document.getElementById('screenLogin').classList.add('active');
+    .user-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background-color: var(--bg-card);
+      padding: 6px 14px 6px 6px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      font-size: 0.88rem;
+      font-weight: 600;
     }
-  </script>
 
-</body>
-</html>
+    .avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #f43f5e, #8b5cf6);
+      display: grid;
+      place-items: center;
+      font-size: 0.8rem;
+    }
+
+    .hero {
+      background: linear-gradient(120deg, #2e1065, #1e1b4b, #0f172a);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      border-radius: 20px;
+      padding: 32px;
+      margin-bottom: 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      background: rgba(139, 92, 246, 0.25);
+      color: #ddd6fe;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 12px;
+    }
+
+    .hero h1 {
+      font-size: 2.1rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+      line-height: 1.15;
+    }
+
+    .hero p {
+      color: #cbd5e1;
+      max-width: 480px;
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.15s, opacity 0.15s;
+    }
+
+    .btn-primary:hover {
+      transform: scale(1.03);
+      opacity: 0.95;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .section-header h2 {
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+
+    .filters {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-pill {
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background-color: var(--bg-card);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-pill:hover {
+      color: var(--text-main);
+      border-color: #52525b;
+    }
+
+    .filter-pill.active {
+      background-color: var(--text-main);
+      color: var(--bg-main);
