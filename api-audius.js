@@ -428,5 +428,7 @@
     document.addEventListener("DOMContentLoaded", initPlayerIntegration);
   } else {
     initPlayerIntegration();
+    <script src="api/audius.js"></script>
+  <script src="app.js"></script>
   }
 })();
