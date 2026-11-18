@@ -52,7 +52,6 @@
       flex-direction: column;
       gap: 28px;
       flex-shrink: 0;
-      overflow-y: auto;
     }
 
     .logo {
@@ -138,7 +137,6 @@
       position: relative;
       flex: 1;
       max-width: 420px;
-      min-width: 200px;
     }
 
     .search-box svg {
@@ -332,7 +330,7 @@
 
     .track-card.playing {
       border-color: var(--accent);
-      background-color: rgba(139, 92, 246, 0.12);
+      background-color: rgba(139, 92, 246, 0.1);
     }
 
     .cover-art {
@@ -345,7 +343,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 2.2rem;
     }
 
     .play-overlay {
@@ -359,7 +356,6 @@
       color: white;
       display: grid;
       place-items: center;
-      font-size: 0.95rem;
       opacity: 0;
       transform: translateY(8px);
       transition: all 0.2s ease;
@@ -402,7 +398,6 @@
       color: var(--text-muted);
       cursor: pointer;
       padding: 4px;
-      font-size: 1rem;
       transition: transform 0.15s, color 0.15s;
     }
 
@@ -420,7 +415,6 @@
       border-radius: 10px;
       object-fit: cover;
       flex-shrink: 0;
-      font-size: 1.5rem;
     }
 
     .player-details .title {
@@ -460,15 +454,13 @@
       border: none;
       color: var(--text-muted);
       cursor: pointer;
-      font-size: 1.05rem;
       transition: color 0.2s, transform 0.1s;
       display: grid;
       place-items: center;
     }
 
-    .control-btn:hover,
-    .control-btn.active-ctrl {
-      color: var(--accent-hover);
+    .control-btn:hover {
+      color: var(--text-main);
       transform: scale(1.1);
     }
 
@@ -483,7 +475,6 @@
     .control-btn.main-play:hover {
       transform: scale(1.08);
       background-color: #fff;
-      color: var(--bg-main);
     }
 
     .progress-container {
@@ -497,20 +488,19 @@
 
     .progress-bar {
       flex: 1;
-      height: 6px;
+      height: 4px;
       background-color: var(--border);
-      border-radius: 4px;
+      border-radius: 2px;
       position: relative;
       cursor: pointer;
-      overflow: hidden;
     }
 
     .progress-filled {
-      width: 0%;
+      width: 35%;
       height: 100%;
       background-color: var(--accent);
-      border-radius: 4px;
-      transition: width 0.2s linear;
+      border-radius: 2px;
+      position: relative;
     }
 
     .player-right {
@@ -545,4 +535,1481 @@
 
     .player-track-info {
       display: flex;
-      align-items: center
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+      .main-content {
+        padding: 16px 16px 100px;
+      }
+      .player-bar {
+        grid-template-columns: 1fr auto;
+        padding: 0 16px;
+      }
+      .player-center {
+        display: none;
+      }
+    }
+
+    /* === NUEVO CÓDIGO: ESTILOS AUTH, PERFIL Y PANEL ADMIN === */
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-ghost {
+      background-color: var(--bg-card);
+      color: var(--text-main);
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--accent);
+      background-color: rgba(139, 92, 246, 0.12);
+    }
+
+    .btn-admin-badge {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.22), rgba(6, 182, 212, 0.18));
+      border-color: rgba(139, 92, 246, 0.5);
+      color: #ddd6fe;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: rgba(5, 5, 10, 0.72);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 999;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-card {
+      width: 100%;
+      max-width: 460px;
+      background: var(--bg-sidebar);
+      border: 1px solid rgba(139, 92, 246, 0.4);
+      border-radius: 22px;
+      padding: 28px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75);
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-card.admin-wide {
+      max-width: 960px;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      gap: 12px;
+    }
+
+    .modal-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+    }
+
+    .modal-subtitle {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+
+    .modal-close {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1rem;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+
+    .modal-close:hover {
+      color: var(--text-main);
+      border-color: var(--accent);
+    }
+
+    .auth-tabs {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      background: var(--bg-card);
+      padding: 5px;
+      border-radius: 12px;
+      margin-bottom: 18px;
+      border: 1px solid var(--border);
+    }
+
+    .auth-tab {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 8px 6px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .auth-tab.active {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .auth-panel {
+      display: none;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .auth-panel.active {
+      display: flex;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .input-group label {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 11px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-main);
+      font-size: 0.92rem;
+      outline: none;
+    }
+
+    .input-field:focus {
+      border-color: var(--accent);
+    }
+
+    .btn-google {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid #d4d4d8;
+      background: #ffffff;
+      color: #18181b;
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .btn-gmail {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: none;
+      background: linear-gradient(135deg, #ea4335, #f43f5e);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+    }
+
+    .btn-guest {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--bg-card-hover);
+      color: var(--text-main);
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+    }
+
+    .btn-guest:hover {
+      border-color: var(--accent-secondary);
+    }
+
+    .auth-error {
+      color: var(--danger);
+      font-size: 0.82rem;
+      min-height: 18px;
+    }
+
+    .auth-success {
+      color: #4ade80;
+      font-size: 0.84rem;
+      min-height: 18px;
+    }
+
+    .profile-banner {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 18px;
+    }
+
+    .profile-avatar-lg {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: #fff;
+      overflow: hidden;
+      flex-shrink: 0;
+      border: 2px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .profile-avatar-lg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .profile-summary h4 {
+      font-size: 1.08rem;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .profile-summary p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      word-break: break-all;
+    }
+
+    .picker-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .color-swatch {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: transform 0.15s, border-color 0.15s;
+    }
+
+    .color-swatch.selected {
+      border-color: #fff;
+      box-shadow: 0 0 0 2px var(--accent);
+    }
+
+    .emoji-chip {
+      padding: 6px 10px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-main);
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+
+    .emoji-chip.selected {
+      border-color: var(--accent);
+      background: rgba(139, 92, 246, 0.25);
+    }
+
+    .profile-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .admin-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .stat-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 16px;
+    }
+
+    .stat-label {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-bottom: 6px;
+    }
+
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 800;
+    }
+
+    .admin-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .admin-table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--bg-card);
+    }
+
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      text-align: left;
+    }
+
+    .admin-table th,
+    .admin-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    .admin-table th {
+      color: var(--text-muted);
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .admin-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .method-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 700;
+    }
+
+    .method-google {
+      background: rgba(59, 130, 246, 0.16);
+      color: #93c5fd;
+      border: 1px solid rgba(59, 130, 246, 0.35);
+    }
+
+    .method-gmail {
+      background: rgba(244, 63, 94, 0.16);
+      color: #fda4af;
+      border: 1px solid rgba(244, 63, 94, 0.35);
+    }
+
+    .method-guest {
+      background: rgba(161, 161, 170, 0.16);
+      color: #e4e4e7;
+      border: 1px solid rgba(161, 161, 170, 0.35);
+    }
+
+    .method-owner {
+      background: rgba(139, 92, 246, 0.25);
+      color: #ddd6fe;
+      border: 1px solid rgba(139, 92, 246, 0.5);
+    }
+
+    .status-dot {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+    }
+
+    .status-dot::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+    }
+
+    .status-dot.offline::before {
+      background: #71717a;
+    }
+
+    .btn-mini-danger {
+      background: rgba(244, 63, 94, 0.14);
+      color: #fda4af;
+      border: 1px solid rgba(244, 63, 94, 0.35);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-mini-danger:hover {
+      background: rgba(244, 63, 94, 0.28);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="logo">
+        <div class="logo-icon">🎵</div>
+        <span>PulseMusic</span>
+      </div>
+
+      <div class="nav-section">
+        <span class="nav-title">Menu</span>
+        <button class="nav-item active">🏠 Inicio</button>
+        <button class="nav-item">🔍 Explorar</button>
+        <button class="nav-item">📚 Biblioteca</button>
+        <button class="nav-item" id="sidebarProfileBtn">👤 Mi Perfil</button>
+        <button class="nav-item" id="sidebarAdminBtn">👑 Panel Admin</button>
+      </div>
+
+      <div class="nav-section">
+        <span class="nav-title">Tus Listas</span>
+        <button class="nav-item">❤️ Favoritos</button>
+        <button class="nav-item">🔥 Éxitos del Momento</button>
+        <button class="nav-item">⚡ Entrenando</button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <div class="topbar">
+        <div class="search-box">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" placeholder="Buscar canciones, artistas o álbumes...">
+        </div>
+        <div class="topbar-actions">
+          <button class="btn-ghost btn-admin-badge" id="topbarAdminBtn">👑 Admin</button>
+          <button class="btn-ghost" id="openAuthBtn">🔑 Iniciar sesión</button>
+          <div class="user-badge" id="userBadge" title="Ver o personalizar mi perfil">
+            <div class="avatar" id="userAvatar">J</div>
+            <span id="userName">Joan</span>
+          </div>
+        </div>
+      </div>
+
+      <section class="hero">
+        <div>
+          <span class="hero-tag">Nuevo Lanzamiento</span>
+          <h1>Siente el Ritmo sin Límites</h1>
+          <p>Disfruta de tus canciones favoritas con la mejor calidad y sin interrupciones. Diseñado para acompañarte en cada momento.</p>
+          <button class="btn-primary">▶ Reproducir Ahora</button>
+        </div>
+      </section>
+
+      <div class="section-header">
+        <h2>Recomendados para ti</h2>
+        <div class="filters">
+          <button class="filter-pill active">Todo</button>
+          <button class="filter-pill">Pop</button>
+          <button class="filter-pill">Hip Hop</button>
+          <button class="filter-pill">Electrónica</button>
+        </div>
+      </div>
+
+      <div class="tracks-grid">
+        <div class="track-card playing">
+          <div class="cover-art" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);">
+            🎵
+            <div class="play-overlay">▶</div>
+          </div>
+          <div class="track-meta">
+            <div>
+              <div class="track-title">Neon Lights</div>
+              <div class="track-artist">Cyber Pulse</div>
+            </div>
+            <button class="like-btn liked">❤️</button>
+          </div>
+        </div>
+
+        <div class="track-card">
+          <div class="cover-art" style="background: linear-gradient(135deg, #ec4899, #be185d);">
+            🎸
+            <div class="play-overlay">▶</div>
+          </div>
+          <div class="track-meta">
+            <div>
+              <div class="track-title">Midnight Drive</div>
+              <div class="track-artist">The Wanderers</div>
+            </div>
+            <button class="like-btn">🤍</button>
+          </div>
+        </div>
+
+        <div class="track-card">
+          <div class="cover-art" style="background: linear-gradient(135deg, #10b981, #047857);">
+            🎧
+            <div class="play-overlay">▶</div>
+          </div>
+          <div class="track-meta">
+            <div>
+              <div class="track-title">Deep Focus</div>
+              <div class="track-artist">Lofi Boy</div>
+            </div>
+            <button class="like-btn">🤍</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <footer class="player-bar">
+    <div class="player-track-info">
+      <div class="player-cover" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); display:grid; place-items:center;">🎵</div>
+      <div class="player-details">
+        <div class="title">Neon Lights</div>
+        <div class="artist">Cyber Pulse</div>
+      </div>
+      <button class="like-btn liked" style="margin-left: 8px;">❤️</button>
+    </div>
+
+    <div class="player-center">
+      <div class="player-controls-btns">
+        <button class="control-btn">🔀</button>
+        <button class="control-btn">⏮</button>
+        <button class="control-btn main-play">▶</button>
+        <button class="control-btn">⏭</button>
+        <button class="control-btn">🔁</button>
+      </div>
+      <div class="progress-container">
+        <span>01:14</span>
+        <div class="progress-bar">
+          <div class="progress-filled"></div>
+        </div>
+        <span>03:45</span>
+      </div>
+    </div>
+
+    <div class="player-right">
+      <button class="control-btn">🔊</button>
+      <input type="range" class="volume-slider" min="0" max="100" value="80">
+    </div>
+  </footer>
+
+  <!-- MODAL INICIO DE SESIÓN -->
+  <div class="modal-backdrop" id="authModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Iniciar Sesión en PulseMusic</h3>
+        <button class="modal-close" id="closeAuthModal">✕</button>
+      </div>
+      <p class="modal-subtitle">Elige cómo deseas entrar: como invitado, con Google, con Gmail o con tu Key de Owner.</p>
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="guest">Invitado</button>
+        <button class="auth-tab" data-tab="google">Google</button>
+        <button class="auth-tab" data-tab="gmail">Gmail</button>
+        <button class="auth-tab" data-tab="owner">Owner</button>
+      </div>
+
+      <div class="auth-panel active" id="panel-guest">
+        <div class="input-group">
+          <label for="guestNameInput">Nombre temporal (opcional)</label>
+          <input type="text" id="guestNameInput" class="input-field" placeholder="Ej: Invitado_Music" />
+        </div>
+        <button class="btn-guest" id="loginGuestBtn">🎧 Entrar como Invitado</button>
+      </div>
+
+      <div class="auth-panel" id="panel-google">
+        <div class="input-group">
+          <label for="googleNameInput">Nombre de tu cuenta Google</label>
+          <input type="text" id="googleNameInput" class="input-field" placeholder="Ej: Alex Rivera" />
+        </div>
+        <div class="input-group">
+          <label for="googleEmailInput">Correo de Google</label>
+          <input type="email" id="googleEmailInput" class="input-field" placeholder="alex.rivera@gmail.com" />
+        </div>
+        <button class="btn-google" id="loginGoogleBtn"><span>G</span> Continuar con Google</button>
+      </div>
+
+      <div class="auth-panel" id="panel-gmail">
+        <div class="input-group">
+          <label for="gmailNameInput">Tu nombre</label>
+          <input type="text" id="gmailNameInput" class="input-field" placeholder="Ej: Laura Méndez" />
+        </div>
+        <div class="input-group">
+          <label for="gmailEmailInput">Correo Gmail (@gmail.com)</label>
+          <input type="email" id="gmailEmailInput" class="input-field" placeholder="usuario@gmail.com" />
+        </div>
+        <div class="input-group">
+          <label for="gmailPassInput">Contraseña</label>
+          <input type="password" id="gmailPassInput" class="input-field" placeholder="••••••••" />
+        </div>
+        <button class="btn-gmail" id="loginGmailBtn">✉️ Iniciar Sesión con Gmail</button>
+      </div>
+
+      <div class="auth-panel" id="panel-owner">
+        <div class="input-group">
+          <label for="ownerNameInput">Usuario Owner</label>
+          <input type="text" id="ownerNameInput" class="input-field" value="jhoan" placeholder="jhoan" />
+        </div>
+        <div class="input-group">
+          <label for="ownerKeyInput">Owner Key</label>
+          <input type="password" id="ownerKeyInput" class="input-field" placeholder="Ingresa la Owner Key" />
+        </div>
+        <button class="btn-primary" id="loginOwnerBtn" style="justify-content:center; width:100%;">👑 Entrar como Owner</button>
+      </div>
+
+      <div class="auth-error" id="authError"></div>
+    </div>
+  </div>
+
+  <!-- MODAL PERFIL Y PERSONALIZACIÓN -->
+  <div class="modal-backdrop" id="profileModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">👤 Mi Perfil</h3>
+        <button class="modal-close" id="closeProfileModal">✕</button>
+      </div>
+
+      <div class="profile-banner">
+        <div class="profile-avatar-lg" id="profilePreviewAvatar">J</div>
+        <div class="profile-summary">
+          <h4 id="profilePreviewName">Usuario</h4>
+          <p id="profilePreviewEmail">correo@ejemplo.com</p>
+          <span class="method-badge method-guest" id="profilePreviewMethod">Invitado</span>
+        </div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:14px;">
+        <div class="input-group">
+          <label for="profileNameInput">Nombre visible</label>
+          <input type="text" id="profileNameInput" class="input-field" maxlength="28" placeholder="Tu nombre en PulseMusic" />
+        </div>
+
+        <div class="input-group">
+          <label for="profileBioInput">Estado / Biografía musical</label>
+          <input type="text" id="profileBioInput" class="input-field" maxlength="80" placeholder="Ej: Escuchando synthwave 24/7 🎧" />
+        </div>
+
+        <div class="input-group">
+          <label for="profileGenreSelect">Género musical favorito</label>
+          <select id="profileGenreSelect" class="input-field">
+            <option value="Todo">Todo tipo de música</option>
+            <option value="Pop">Pop</option>
+            <option value="Hip Hop">Hip Hop</option>
+            <option value="Electrónica">Electrónica</option>
+            <option value="Lo-Fi">Lo-Fi</option>
+            <option value="Rock">Rock</option>
+            <option value="Urbano">Urbano / Reggaetón</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label>Color de tu avatar</label>
+          <div class="picker-row" id="avatarColorPicker"></div>
+        </div>
+
+        <div class="input-group">
+          <label>Icono de avatar</label>
+          <div class="picker-row" id="avatarIconPicker"></div>
+        </div>
+
+        <div class="input-group">
+          <label for="profilePhotoInput">Foto personalizada (opcional)</label>
+          <div style="display:flex; gap:8px; align-items:center;">
+            <input type="file" id="profilePhotoInput" accept="image/*" class="input-field" style="padding:8px; font-size:0.82rem;" />
+            <button type="button" class="btn-ghost" id="removePhotoBtn" style="padding:8px 12px; border-radius:10px;">Quitar</button>
+          </div>
+        </div>
+
+        <div class="auth-success" id="profileSaveMsg"></div>
+
+        <button class="btn-primary" id="saveProfileBtn" style="width:100%; justify-content:center;">💾 Guardar cambios del perfil</button>
+
+        <div class="profile-actions" style="justify-content:space-between; padding-top:10px; border-top:1px solid var(--border);">
+          <button class="btn-ghost" id="switchAccountBtn" style="border-radius:10px;">🔄 Cambiar de cuenta</button>
+          <button class="btn-mini-danger" id="profileLogoutBtn">🚪 Cerrar sesión</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL VERIFICACIÓN OWNER KEY -->
+  <div class="modal-backdrop" id="ownerKeyModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">👑 Acceso al Panel Admin</h3>
+        <button class="modal-close" id="closeOwnerKeyModal">✕</button>
+      </div>
+      <p class="modal-subtitle">Área exclusiva para el Owner (<strong>Jhoan</strong>). Ingresa tu Owner Key para ver los usuarios y métodos de inicio de sesión.</p>
+      <div class="input-group" style="margin-bottom: 14px;">
+        <label for="verifyOwnerKeyInput">Owner Key</label>
+        <input type="password" id="verifyOwnerKeyInput" class="input-field" placeholder="XXXX-0000" />
+      </div>
+      <div class="auth-error" id="ownerKeyError"></div>
+      <button class="btn-primary" id="verifyOwnerKeyBtn" style="width:100%; justify-content:center; margin-top: 8px;">Desbloquear Panel Admin</button>
+    </div>
+  </div>
+
+  <!-- MODAL PANEL ADMIN -->
+  <div class="modal-backdrop" id="adminModal">
+    <div class="modal-card admin-wide">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title">👑 Panel de Administración — PulseMusic</h3>
+          <p style="font-size:0.84rem; color:var(--text-muted); margin-top:4px;">Owner verificado: <strong style="color:#ddd6fe;">Jhoan</strong> | Control de usuarios y accesos</p>
+        </div>
+        <button class="modal-close" id="closeAdminModal">✕</button>
+      </div>
+
+      <div class="admin-stats" id="adminStats"></div>
+
+      <div class="admin-toolbar">
+        <div class="filters" id="adminMethodFilters">
+          <button class="filter-pill active" data-method="ALL">Todos</button>
+          <button class="filter-pill" data-method="Google">Google</button>
+          <button class="filter-pill" data-method="Gmail">Gmail</button>
+          <button class="filter-pill" data-method="Invitado">Invitado</button>
+          <button class="filter-pill" data-method="Owner Key">Owner</button>
+        </div>
+        <input type="text" id="adminSearchInput" class="input-field" placeholder="Filtrar usuario o correo..." style="max-width:240px; padding:8px 12px;" />
+      </div>
+
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Usuario</th>
+              <th>Correo / ID</th>
+              <th>Método</th>
+              <th>Género fav.</th>
+              <th>Estado</th>
+              <th>Último acceso</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="adminUsersTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const OWNER_USERNAME = "jhoan";
+      const OWNER_KEY = "ABCD-1234";
+      const USERS_DB_KEY = "pulsemusic_users_db_v1";
+      const SESSION_KEY = "pulsemusic_active_session_v1";
+
+      // Almacenamiento seguro (funciona incluso si localStorage está bloqueado)
+      const memoryStorage = {};
+      function safeGet(key) {
+        try {
+          return window.localStorage.getItem(key);
+        } catch (e) {
+          return memoryStorage[key] || null;
+        }
+      }
+      function safeSet(key, val) {
+        memoryStorage[key] = val;
+        try {
+          window.localStorage.setItem(key, val);
+        } catch (e) {}
+      }
+      function safeRemove(key) {
+        delete memoryStorage[key];
+        try {
+          window.localStorage.removeItem(key);
+        } catch (e) {}
+      }
+
+      const AVATAR_GRADIENTS = [
+        "linear-gradient(135deg, #f43f5e, #8b5cf6)",
+        "linear-gradient(135deg, #8b5cf6, #06b6d4)",
+        "linear-gradient(135deg, #3b82f6, #1d4ed8)",
+        "linear-gradient(135deg, #10b981, #047857)",
+        "linear-gradient(135deg, #f59e0b, #ea580c)",
+        "linear-gradient(135deg, #ec4899, #be185d)"
+      ];
+
+      const AVATAR_ICONS = ["INITIAL", "🎵", "🎧", "🔥", "⚡", "🎸", "🚀", "👑"];
+
+      const userBadge = document.getElementById("userBadge");
+      const userAvatar = document.getElementById("userAvatar");
+      const userNameEl = document.getElementById("userName");
+      const openAuthBtn = document.getElementById("openAuthBtn");
+      const sidebarProfileBtn = document.getElementById("sidebarProfileBtn");
+      const sidebarAdminBtn = document.getElementById("sidebarAdminBtn");
+      const topbarAdminBtn = document.getElementById("topbarAdminBtn");
+
+      const authModal = document.getElementById("authModal");
+      const closeAuthModal = document.getElementById("closeAuthModal");
+      const authTabs = document.querySelectorAll(".auth-tab");
+      const authPanels = document.querySelectorAll(".auth-panel");
+      const authError = document.getElementById("authError");
+
+      const profileModal = document.getElementById("profileModal");
+      const closeProfileModal = document.getElementById("closeProfileModal");
+      const profilePreviewAvatar = document.getElementById("profilePreviewAvatar");
+      const profilePreviewName = document.getElementById("profilePreviewName");
+      const profilePreviewEmail = document.getElementById("profilePreviewEmail");
+      const profilePreviewMethod = document.getElementById("profilePreviewMethod");
+      const profileNameInput = document.getElementById("profileNameInput");
+      const profileBioInput = document.getElementById("profileBioInput");
+      const profileGenreSelect = document.getElementById("profileGenreSelect");
+      const avatarColorPicker = document.getElementById("avatarColorPicker");
+      const avatarIconPicker = document.getElementById("avatarIconPicker");
+      const profilePhotoInput = document.getElementById("profilePhotoInput");
+      const removePhotoBtn = document.getElementById("removePhotoBtn");
+      const profileSaveMsg = document.getElementById("profileSaveMsg");
+      const saveProfileBtn = document.getElementById("saveProfileBtn");
+      const switchAccountBtn = document.getElementById("switchAccountBtn");
+      const profileLogoutBtn = document.getElementById("profileLogoutBtn");
+
+      const ownerKeyModal = document.getElementById("ownerKeyModal");
+      const closeOwnerKeyModal = document.getElementById("closeOwnerKeyModal");
+      const verifyOwnerKeyInput = document.getElementById("verifyOwnerKeyInput");
+      const verifyOwnerKeyBtn = document.getElementById("verifyOwnerKeyBtn");
+      const ownerKeyError = document.getElementById("ownerKeyError");
+
+      const adminModal = document.getElementById("adminModal");
+      const closeAdminModal = document.getElementById("closeAdminModal");
+      const adminStats = document.getElementById("adminStats");
+      const adminUsersTableBody = document.getElementById("adminUsersTableBody");
+      const adminSearchInput = document.getElementById("adminSearchInput");
+      const adminFilterButtons = document.querySelectorAll("#adminMethodFilters .filter-pill");
+
+      let currentAdminFilter = "ALL";
+      let draftProfileColor = AVATAR_GRADIENTS[0];
+      let draftProfileIcon = "INITIAL";
+      let draftProfilePhoto = "";
+
+      function formatNow() {
+        return new Date().toLocaleString("es-ES", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit"
+        });
+      }
+
+      function getUsersDB() {
+        const raw = safeGet(USERS_DB_KEY);
+        if (raw) {
+          try {
+            const parsed = JSON.parse(raw);
+            if (Array.isArray(parsed)) return parsed;
+          } catch (e) {}
+        }
+        const seed = [
+          {
+            id: "owner-jhoan",
+            name: "Jhoan",
+            email: "jhoan@pulsemusic.owner",
+            method: "Owner Key",
+            role: "Owner",
+            bio: "Creador de PulseMusic 👑",
+            favGenre: "Electrónica",
+            avatarColor: AVATAR_GRADIENTS[1],
+            avatarIcon: "👑",
+            avatarPhoto: "",
+            online: false,
+            lastLogin: formatNow()
+          },
+          {
+            id: "u-demo-1",
+            name: "María López",
+            email: "maria.lopez@gmail.com",
+            method: "Google",
+            role: "Usuario",
+            bio: "Fan del Pop y Synthwave",
+            favGenre: "Pop",
+            avatarColor: AVATAR_GRADIENTS[5],
+            avatarIcon: "INITIAL",
+            avatarPhoto: "",
+            online: true,
+            lastLogin: formatNow()
+          },
+          {
+            id: "u-demo-2",
+            name: "Carlos Vega",
+            email: "cvega.music@gmail.com",
+            method: "Gmail",
+            role: "Usuario",
+            bio: "Beats para programar",
+            favGenre: "Hip Hop",
+            avatarColor: AVATAR_GRADIENTS[2],
+            avatarIcon: "🎧",
+            avatarPhoto: "",
+            online: true,
+            lastLogin: formatNow()
+          },
+          {
+            id: "u-demo-3",
+            name: "Invitado_742",
+            email: "guest_742@pulsemusic.local",
+            method: "Invitado",
+            role: "Invitado",
+            bio: "",
+            favGenre: "Todo",
+            avatarColor: AVATAR_GRADIENTS[3],
+            avatarIcon: "INITIAL",
+            avatarPhoto: "",
+            online: false,
+            lastLogin: formatNow()
+          }
+        ];
+        safeSet(USERS_DB_KEY, JSON.stringify(seed));
+        return seed;
+      }
+
+      function saveUsersDB(users) {
+        safeSet(USERS_DB_KEY, JSON.stringify(users));
+      }
+
+      function getCurrentSession() {
+        const raw = safeGet(SESSION_KEY);
+        if (!raw) return null;
+        try {
+          return JSON.parse(raw);
+        } catch (e) {
+          return null;
+        }
+      }
+
+      function setCurrentSession(user) {
+        const users = getUsersDB();
+        const prev = getCurrentSession();
+        if (prev && prev.id !== user.id) {
+          const prevIdx = users.findIndex(u => u.id === prev.id);
+          if (prevIdx !== -1) users[prevIdx].online = false;
+        }
+
+        const existingIdx = users.findIndex(
+          u => u.id === user.id || ((u.email || "").toLowerCase() === user.email.toLowerCase() && u.method === user.method)
+        );
+        const existing = existingIdx !== -1 ? users[existingIdx] : {};
+
+        const record = {
+          id: existing.id || user.id,
+          name: existing.name || user.name,
+          email: user.email,
+          method: user.method,
+          role: user.role,
+          bio: existing.bio !== undefined ? existing.bio : (user.bio || ""),
+          favGenre: existing.favGenre || user.favGenre || "Todo",
+          avatarColor: existing.avatarColor || user.avatarColor || (user.role === "Owner" ? AVATAR_GRADIENTS[1] : AVATAR_GRADIENTS[0]),
+          avatarIcon: existing.avatarIcon || user.avatarIcon || (user.role === "Owner" ? "👑" : "INITIAL"),
+          avatarPhoto: existing.avatarPhoto || user.avatarPhoto || "",
+          online: true,
+          lastLogin: formatNow()
+        };
+
+        if (existingIdx !== -1) {
+          users[existingIdx] = record;
+        } else {
+          users.unshift(record);
+        }
+
+        saveUsersDB(users);
+        safeSet(SESSION_KEY, JSON.stringify(record));
+        updateTopbarUI();
+      }
+
+      function logoutCurrentUser() {
+        const current = getCurrentSession();
+        if (current) {
+          const users = getUsersDB();
+          const idx = users.findIndex(u => u.id === current.id);
+          if (idx !== -1) {
+            users[idx].online = false;
+            saveUsersDB(users);
+          }
+        }
+        safeRemove(SESSION_KEY);
+        updateTopbarUI();
+      }
+
+      function renderAvatarElement(el, user) {
+        el.innerHTML = "";
+        el.style.background = user.avatarColor || AVATAR_GRADIENTS[0];
+
+        if (user.avatarPhoto && user.avatarPhoto.startsWith("data:image/")) {
+          const img = document.createElement("img");
+          img.src = user.avatarPhoto;
+          img.alt = user.name || "Avatar";
+          el.appendChild(img);
+          return;
+        }
+
+        if (user.avatarIcon && user.avatarIcon !== "INITIAL") {
+          el.textContent = user.avatarIcon;
+        } else {
+          el.textContent = (user.name || "U").trim().charAt(0).toUpperCase();
+        }
+      }
+
+      function updateTopbarUI() {
+        const session = getCurrentSession();
+        if (!session) {
+          userAvatar.innerHTML = "";
+          userAvatar.textContent = "?";
+          userAvatar.style.background = "linear-gradient(135deg, #3f3f46, #27272a)";
+          userNameEl.textContent = "Iniciar sesión";
+          openAuthBtn.textContent = "🔑 Iniciar sesión";
+          return;
+        }
+
+        renderAvatarElement(userAvatar, session);
+        userNameEl.textContent = session.role === "Owner" ? `${session.name} (Owner)` : session.name;
+        openAuthBtn.textContent = "👤 Mi Perfil";
+      }
+
+      authTabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+          authTabs.forEach(t => t.classList.remove("active"));
+          authPanels.forEach(p => p.classList.remove("active"));
+          tab.classList.add("active");
+          document.getElementById(`panel-${tab.dataset.tab}`).classList.add("active");
+          authError.textContent = "";
+        });
+      });
+
+      function openAuthModal() {
+        authError.textContent = "";
+        authModal.classList.add("open");
+      }
+
+      function hideAuthModal() {
+        authModal.classList.remove("open");
+      }
+
+      function openProfileOrAuth() {
+        if (!getCurrentSession()) {
+          openAuthModal();
+          return;
+        }
+        openProfileModal();
+      }
+
+      openAuthBtn.addEventListener("click", openProfileOrAuth);
+      userBadge.addEventListener("click", openProfileOrAuth);
+      sidebarProfileBtn.addEventListener("click", openProfileOrAuth);
+      closeAuthModal.addEventListener("click", hideAuthModal);
+
+      document.getElementById("loginGuestBtn").addEventListener("click", () => {
+        const customName = document.getElementById("guestNameInput").value.trim();
+        const randomNum = Math.floor(100 + Math.random() * 900);
+        const name = customName || `Invitado_${randomNum}`;
+        setCurrentSession({
+          id: `guest-${Date.now()}`,
+          name,
+          email: `guest_${randomNum}@pulsemusic.local`,
+          method: "Invitado",
+          role: "Invitado"
+        });
+        hideAuthModal();
+      });
+
+      document.getElementById("loginGoogleBtn").addEventListener("click", () => {
+        const name = document.getElementById("googleNameInput").value.trim();
+        const email = document.getElementById("googleEmailInput").value.trim();
+        if (!name || !email || !email.includes("@")) {
+          authError.textContent = "Ingresa tu nombre y un correo válido de Google.";
+          return;
+        }
+        setCurrentSession({
+          id: `google-${Date.now()}`,
+          name,
+          email,
+          method: "Google",
+          role: "Usuario"
+        });
+        hideAuthModal();
+      });
+
+      document.getElementById("loginGmailBtn").addEventListener("click", () => {
+        const name = document.getElementById("gmailNameInput").value.trim();
+        const email = document.getElementById("gmailEmailInput").value.trim().toLowerCase();
+        const pass = document.getElementById("gmailPassInput").value;
+        if (!name) {
+          authError.textContent = "Por favor escribe tu nombre.";
+          return;
+        }
+        if (!email.endsWith("@gmail.com")) {
+          authError.textContent = "El correo debe terminar en @gmail.com.";
+          return;
+        }
+        if (pass.length < 4) {
+          authError.textContent = "Ingresa una contraseña de al menos 4 caracteres.";
+          return;
+        }
+        setCurrentSession({
+          id: `gmail-${Date.now()}`,
+          name,
+          email,
+          method: "Gmail",
+          role: "Usuario"
+        });
+        hideAuthModal();
+      });
+
+      document.getElementById("loginOwnerBtn").addEventListener("click", () => {
+        const username = document.getElementById("ownerNameInput").value.trim().toLowerCase();
+        const key = document.getElementById("ownerKeyInput").value.trim();
+        if (username !== OWNER_USERNAME) {
+          authError.textContent = "Usuario Owner incorrecto. El owner es jhoan.";
+          return;
+        }
+        if (key !== OWNER_KEY) {
+          authError.textContent = "Owner Key incorrecta.";
+          return;
+        }
+        setCurrentSession({
+          id: "owner-jhoan",
+          name: "Jhoan",
+          email: "jhoan@pulsemusic.owner",
+          method: "Owner Key",
+          role: "Owner"
+        });
+        document.getElementById("ownerKeyInput").value = "";
+        hideAuthModal();
+      });
+
+      function getMethodBadgeClass(method) {
+        if (method === "Google") return "method-google";
+        if (method === "Gmail") return "method-gmail";
+        if (method === "Owner Key") return "method-owner";
+        return "method-guest";
+      }
+
+      function renderProfilePickers() {
+        avatarColorPicker.innerHTML = AVATAR_GRADIENTS.map(grad => `
+          <button type="button" class="color-swatch ${draftProfileColor === grad ? "selected" : ""}" style="background:${grad};" data-grad="${grad}"></button>
+        `).join("");
+
+        avatarColorPicker.querySelectorAll(".color-swatch").forEach(btn => {
+          btn.addEventListener("click", () => {
+            draftProfileColor = btn.dataset.grad;
+            renderProfilePickers();
+            refreshProfilePreview();
+          });
+        });
+
+        avatarIconPicker.innerHTML = AVATAR_ICONS.map(icon => `
+          <button type="button" class="emoji-chip ${draftProfileIcon === icon ? "selected" : ""}" data-icon="${icon}">
+            ${icon === "INITIAL" ? "Inicial" : icon}
+          </button>
+        `).join("");
+
+        avatarIconPicker.querySelectorAll(".emoji-chip").forEach(btn => {
+          btn.addEventListener("click", () => {
+            draftProfileIcon = btn.dataset.icon;
+            draftProfilePhoto = "";
+            profilePhotoInput.value = "";
+            renderProfilePickers();
+            refreshProfilePreview();
+          });
+        });
+      }
+
+      function refreshProfilePreview() {
+        const session = getCurrentSession();
+        if (!session) return;
+        const previewUser = {
+          name: profileNameInput.value.trim() || session.name,
+          avatarColor: draftProfileColor,
+          avatarIcon: draftProfileIcon,
+          avatarPhoto: draftProfilePhoto
+        };
+        renderAvatarElement(profilePreviewAvatar, previewUser);
+        profilePreviewName.textContent = session.role === "Owner" ? `${previewUser.name} (Owner)` : previewUser.name;
+        profilePreviewEmail.textContent = session.email;
+        profilePreviewMethod.className = `method-badge ${getMethodBadgeClass(session.method)}`;
+        profilePreviewMethod.textContent = session.method;
+      }
+
+      function openProfileModal() {
+        const session = getCurrentSession();
+        if (!session) return;
+        profileSaveMsg.textContent = "";
+        profileNameInput.value = session.name || "";
+        profileBioInput.value = session.bio || "";
+        profileGenreSelect.value = session.favGenre || "Todo";
+        draftProfileColor = session.avatarColor || AVATAR_GRADIENTS[0];
+        draftProfileIcon = session.avatarIcon || "INITIAL";
+        draftProfilePhoto = session.avatarPhoto || "";
+        profilePhotoInput.value = "";
+
+        renderProfilePickers();
+        refreshProfilePreview();
+        profileModal.classList.add("open");
+      }
+
+      profileNameInput.addEventListener("input", refreshProfilePreview);
+
+      profilePhotoInput.addEventListener("change", e => {
+        const file = e.target.files && e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function (ev) {
+          const img = new Image();
+          img.onload = function () {
+            const canvas = document.createElement("canvas");
+            const size = 140;
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext("2d");
+            const minSide = Math.min(img.width, img.height);
+            const sx = (img.width - minSide) / 2;
+            const sy = (img.height - minSide) / 2;
+            ctx.drawImage(img, sx, sy, minSide, minSide, 0, 0, size, size);
+            draftProfilePhoto = canvas.toDataURL("image/jpeg", 0.82);
+            refreshProfilePreview();
+          };
+          img.src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+
+      removePhotoBtn.addEventListener("click", () => {
+        draftProfilePhoto = "";
+        profilePhotoInput.value = "";
+        refreshProfilePreview();
+      });
+
+      saveProfileBtn.addEventListener("click", () => {
+        const session = getCurrentSession();
+        if (!session) return;
+        const newName = profileNameInput.value.trim();
+        if (!newName) {
+          profileSaveMsg.style.color = "var(--danger)";
+          profileSaveMsg.textContent = "El nombre no puede estar vacío.";
+          return;
+        }
+
+        const updatedSession = {
+          ...session,
+          name: newName,
+          bio: profileBioInput.value.trim(),
+          favGenre: profileGenreSelect.value,
+          avatarColor: draftProfileColor,
+          avatarIcon: draftProfileIcon,
+          avatarPhoto: draftProfilePhoto
+        };
+
+        safeSet(SESSION_KEY, JSON.stringify(updatedSession));
+        const users = getUsersDB();
+        const idx = users.findIndex(u => u.id === updatedSession.id);
+        if (idx !== -1) {
+          users[idx] = { ...users[idx], ...updatedSession };
+          saveUsersDB(users);
+        }
+
+        updateTopbarUI();
+        refreshProfilePreview();
+        profileSaveMsg.style.color = "#4ade80";
+        profileSaveMsg.textContent = "✅ ¡Perfil actualizado correctamente!";
+      });
+
+      closeProfileModal.addEventListener("click", () => profileModal.classList.remove("open"));
+      switchAccountBtn.addEventListener("click", () => {
+        profileModal.classList.remove("open");
+        openAuthModal();
+      });
+      profileLogoutBtn.addEventListener("click", () => {
+        logoutCurrentUser();
+        profileModal.classList.remove("open");
+        openAuthModal();
+      });
+
+      function tryOpenAdminPanel() {
+        const session = getCurrentSession();
+        if (session && session.role === "Owner") {
+          renderAdminPanel();
+          adminModal.classList.add("open");
+        } else {
+          ownerKeyError.textContent = "";
+          verifyOwnerKeyInput.value = "";
+          ownerKeyModal.classList.add("open");
+        }
+      }
+
+      sidebarAdminBtn.addEventListener("click", tryOpenAdminPanel);
+      topbarAdminBtn.addEventListener("click", tryOpenAdminPanel);
+      closeOwnerKeyModal.addEventListener("click", () => ownerKeyModal.classList.remove("open"));
+
+      verifyOwnerKeyBtn.addEventListener("click", () => {
+        const key = verifyOwnerKeyInput.value.trim();
+        if (key !== OWNER_KEY) {
+          ownerKeyError.textContent = "Key inválida. Acceso denegado.";
+          return;
+        }
+        setCurrentSession({
+          id: "owner-jhoan",
+          name: "Jhoan",
+          email: "jhoan@pulsemusic.owner",
+          method: "Owner Key",
+          role: "Owner"
+        });
+        ownerKeyModal.classList.remove("open");
+        renderAdminPanel();
+        adminModal.classList.add("open");
+      });
+
+      closeAdminModal.addEventListener("click", () => adminModal.classList.remove("open"));
+
+      adminFilterButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+          adminFilterButtons.forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          currentAdminFilter = btn.dataset.method;
+          renderAdminPanel();
+        });
+      });
+
+      adminSearchInput.addEventListener("input", renderAdminPanel);
+
+      function renderAdminPanel() {
+        const users = getUsersDB();
+        const total = users.length;
+        const onlineCount = users.filter(u => u.online).length;
+        const googleGmailCount = users.filter(u => u.method === "Google" || u.method === "Gmail").length;
+        const guestCount = users.filter(u => u.method === "Invitado").length;
+
+        adminStats.innerHTML = `
+          <div class="stat-box"><div class="stat-label">Total Usuarios</div><div class="stat-value">${total}</div></div>
+          <div class="stat-box"><div class="stat-label">En Línea</div><div class="stat-value" style="color:#4ade80;">${onlineCount}</div></div>
+          <div class="stat-box"><div class="stat-label">Google / Gmail</div><div class="stat-value" style="color:#93c5fd;">${googleGmailCount}</div></div>
+          <div class="stat-box"><div class="stat-label">Invitados</div><div class="stat-value" style="color:#e4e4e7;">${guestCount}</div></div>
+        `;
+
+        const query = adminSearchInput.value.trim().toLowerCase();
+        const filtered = users.filter(u => {
+          const matchesMethod = currentAdminFilter === "ALL" || u.method === currentAdminFilter;
+          const matchesQuery =
+            !query ||
+            (u.name || "").toLowerCase().includes(query) ||
+            (u.email || "").toLowerCase().includes(query) ||
+            (u.method || "").toLowerCase().includes(query);
+          return matchesMethod && matchesQuery;
+        });
+
+        if (filtered.length === 0) {
+          adminUsersTableBody.innerHTML = `
+            <tr><td colspan="7" style="text-align:center; color:var(--text-muted); padding:24px;">No hay usuarios que coincidan con el filtro.</td></tr>
+          `;
+          return;
+        }
+
+        adminUsersTableBody.innerHTML = filtered.map(u => {
+          const isOwner = u.role === "Owner";
+          return `
+            <tr>
+              <td><strong>${escapeHTML(u.name)}</strong>${isOwner ? ' <span style="color:#c4b5fd; font-size:0.75rem;">(Owner)</span>' : ""}</td>
+              <td style="color:var(--text-muted);">${escapeHTML(u.email)}</td>
+              <td><span class="method-badge ${getMethodBadgeClass(u.method)}">${escapeHTML(u.method)}</span></td>
+              <td style="color:var(--text-muted);">${escapeHTML(u.favGenre || "Todo")}</td>
+              <td><span class="status-dot ${u.online ? "" : "offline"}">${u.online ? "En línea" : "Desconectado"}</span></td>
+              <td style="color:var(--text-muted);">${escapeHTML(u.lastLogin)}</td>
+              <td>${isOwner ? '<span style="color:var(--text-muted); font-size:0.78rem;">Protegido</span>' : `<button class="btn-mini-danger" data-delete-id="${escapeHTML(u.id)}">Eliminar</button>`}</td>
+            </tr>
+          `;
+        }).join("");
+
+        adminUsersTableBody.querySelectorAll("[data-delete-id]").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const targetId = btn.getAttribute("data-delete-id");
+            const updated = getUsersDB().filter(u => u.id !== targetId);
+            saveUsersDB(updated);
+            const current = getCurrentSession();
+            if (current && current.id === targetId) {
+              safeRemove(SESSION_KEY);
+              updateTopbarUI();
+            }
+            renderAdminPanel();
+          });
+        });
+      }
+
+      function escapeHTML(str) {
+        return String(str)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      [authModal, profileModal, ownerKeyModal, adminModal].forEach(modal => {
+        modal.addEventListener("click", e => {
+          if (e.target === modal) modal.classList.remove("open");
+        });
+      });
+
+      getUsersDB();
+      updateTopbarUI();
+      if (!getCurrentSession()) {
+        openAuthModal();
+      }
+    })();
+  </script>
+
+</body>
+</html>
