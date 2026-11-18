@@ -556,12 +556,22 @@
       }
     }
 
-    /* === NUEVO CÓDIGO: ESTILOS AUTH, PERFIL Y PANEL ADMIN === */
+    /* === NUEVO CÓDIGO: ESTILOS AUTH, PERFIL, VERIFICADO Y PANEL ADMIN === */
     .topbar-actions {
       display: flex;
       align-items: center;
       gap: 10px;
       flex-wrap: wrap;
+    }
+
+    .verified-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #38bdf8;
+      vertical-align: middle;
+      margin-left: 4px;
+      flex-shrink: 0;
     }
 
     .btn-ghost {
@@ -623,7 +633,7 @@
     }
 
     .modal-card.admin-wide {
-      max-width: 960px;
+      max-width: 1040px;
     }
 
     .modal-header {
@@ -676,6 +686,10 @@
       border: 1px solid var(--border);
     }
 
+    .auth-tabs.three-cols {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
     .auth-tab {
       background: transparent;
       border: none;
@@ -717,12 +731,12 @@
 
     .input-field {
       width: 100%;
-      padding: 11px 14px;
+      padding: 10px 13px;
       border-radius: 10px;
       border: 1px solid var(--border);
       background: var(--bg-card);
       color: var(--text-main);
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       outline: none;
     }
 
@@ -821,6 +835,10 @@
       font-size: 1.08rem;
       font-weight: 800;
       margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 4px;
     }
 
     .profile-summary p {
@@ -842,7 +860,6 @@
       border-radius: 50%;
       border: 2px solid transparent;
       cursor: pointer;
-      transition: transform 0.15s, border-color 0.15s;
     }
 
     .color-swatch.selected {
@@ -872,11 +889,52 @@
       margin-top: 12px;
     }
 
+    /* Admin Tabs & Panel */
+    .admin-nav-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .admin-nav-tab {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .admin-nav-tab:hover {
+      color: var(--text-main);
+      border-color: #52525b;
+    }
+
+    .admin-nav-tab.active {
+      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      color: #fff;
+      border-color: transparent;
+    }
+
+    .admin-section {
+      display: none;
+    }
+
+    .admin-section.active {
+      display: block;
+    }
+
     .admin-stats {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 12px;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     .stat-box {
@@ -895,7 +953,7 @@
     }
 
     .stat-value {
-      font-size: 1.5rem;
+      font-size: 1.45rem;
       font-weight: 800;
     }
 
@@ -918,20 +976,20 @@
     .admin-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       text-align: left;
     }
 
     .admin-table th,
     .admin-table td {
-      padding: 12px 14px;
+      padding: 11px 13px;
       border-bottom: 1px solid var(--border);
       white-space: nowrap;
     }
 
     .admin-table th {
       color: var(--text-muted);
-      font-size: 0.76rem;
+      font-size: 0.74rem;
       text-transform: uppercase;
       letter-spacing: 0.6px;
       background: rgba(255, 255, 255, 0.02);
@@ -975,6 +1033,17 @@
       border: 1px solid rgba(139, 92, 246, 0.5);
     }
 
+    .role-badge-admin {
+      background: rgba(56, 189, 248, 0.16);
+      color: #7dd3fc;
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      margin-left: 6px;
+    }
+
     .status-dot {
       display: inline-flex;
       align-items: center;
@@ -998,15 +1067,87 @@
       background: rgba(244, 63, 94, 0.14);
       color: #fda4af;
       border: 1px solid rgba(244, 63, 94, 0.35);
-      padding: 6px 12px;
+      padding: 5px 10px;
       border-radius: 8px;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       font-weight: 600;
       cursor: pointer;
     }
 
     .btn-mini-danger:hover {
       background: rgba(244, 63, 94, 0.28);
+    }
+
+    .btn-mini-accent {
+      background: rgba(139, 92, 246, 0.18);
+      color: #ddd6fe;
+      border: 1px solid rgba(139, 92, 246, 0.45);
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-mini-accent:hover {
+      background: rgba(139, 92, 246, 0.32);
+    }
+
+    .schedule-form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 14px;
+      border-radius: 14px;
+      margin-bottom: 16px;
+      align-items: end;
+    }
+
+    .code-console {
+      background: #050508;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.8rem;
+      color: #a5f3fc;
+      max-height: 240px;
+      overflow: auto;
+      white-space: pre-wrap;
+      margin-top: 12px;
+    }
+
+    .server-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+    }
+
+    .server-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .meter-bar {
+      width: 100%;
+      height: 7px;
+      background: #27272a;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 4px;
+    }
+
+    .meter-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+      border-radius: 999px;
     }
   </style>
 </head>
@@ -1157,13 +1298,13 @@
         <h3 class="modal-title">Iniciar Sesión en PulseMusic</h3>
         <button class="modal-close" id="closeAuthModal">✕</button>
       </div>
-      <p class="modal-subtitle">Elige cómo deseas entrar: como invitado, con Google, con Gmail o con tu Key de Owner.</p>
+      <p class="modal-subtitle">Elige cómo deseas entrar a la plataforma.</p>
 
-      <div class="auth-tabs">
+      <div class="auth-tabs" id="authTabsContainer">
         <button class="auth-tab active" data-tab="guest">Invitado</button>
         <button class="auth-tab" data-tab="google">Google</button>
         <button class="auth-tab" data-tab="gmail">Gmail</button>
-        <button class="auth-tab" data-tab="owner">Owner</button>
+        <button class="auth-tab" data-tab="owner" id="ownerLoginTab">Owner</button>
       </div>
 
       <div class="auth-panel active" id="panel-guest">
@@ -1296,7 +1437,7 @@
         <h3 class="modal-title">👑 Acceso al Panel Admin</h3>
         <button class="modal-close" id="closeOwnerKeyModal">✕</button>
       </div>
-      <p class="modal-subtitle">Área exclusiva para el Owner (<strong>Jhoan</strong>). Ingresa tu Owner Key para ver los usuarios y métodos de inicio de sesión.</p>
+      <p class="modal-subtitle">Área exclusiva para el Owner (<strong>Jhoan</strong>) y Administradores autorizados. Ingresa la Owner Key para desbloquear.</p>
       <div class="input-group" style="margin-bottom: 14px;">
         <label for="verifyOwnerKeyInput">Owner Key</label>
         <input type="password" id="verifyOwnerKeyInput" class="input-field" placeholder="XXXX-0000" />
@@ -1306,45 +1447,192 @@
     </div>
   </div>
 
+  <!-- MODAL KEY PARA DAR / QUITAR ADMIN -->
+  <div class="modal-backdrop" id="adminGrantModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title" id="adminGrantTitle">🛡️ Autorización de Seguridad</h3>
+        <button class="modal-close" id="closeAdminGrantModal">✕</button>
+      </div>
+      <p class="modal-subtitle" id="adminGrantSubtitle">Ingresa la Key de seguridad para modificar permisos de administrador.</p>
+      <div class="input-group" style="margin-bottom: 14px;">
+        <label for="adminGrantKeyInput">Key de Seguridad</label>
+        <input type="password" id="adminGrantKeyInput" class="input-field" placeholder="Ingresa la key de seguridad" />
+      </div>
+      <div class="auth-error" id="adminGrantError"></div>
+      <button class="btn-primary" id="confirmAdminGrantBtn" style="width:100%; justify-content:center; margin-top: 8px;">Confirmar Permiso</button>
+    </div>
+  </div>
+
   <!-- MODAL PANEL ADMIN -->
   <div class="modal-backdrop" id="adminModal">
     <div class="modal-card admin-wide">
       <div class="modal-header">
         <div>
           <h3 class="modal-title">👑 Panel de Administración — PulseMusic</h3>
-          <p style="font-size:0.84rem; color:var(--text-muted); margin-top:4px;">Owner verificado: <strong style="color:#ddd6fe;">Jhoan</strong> | Control de usuarios y accesos</p>
+          <p style="font-size:0.84rem; color:var(--text-muted); margin-top:4px;" id="adminPanelHeaderRole">Control general del sistema</p>
         </div>
         <button class="modal-close" id="closeAdminModal">✕</button>
       </div>
 
-      <div class="admin-stats" id="adminStats"></div>
-
-      <div class="admin-toolbar">
-        <div class="filters" id="adminMethodFilters">
-          <button class="filter-pill active" data-method="ALL">Todos</button>
-          <button class="filter-pill" data-method="Google">Google</button>
-          <button class="filter-pill" data-method="Gmail">Gmail</button>
-          <button class="filter-pill" data-method="Invitado">Invitado</button>
-          <button class="filter-pill" data-method="Owner Key">Owner</button>
-        </div>
-        <input type="text" id="adminSearchInput" class="input-field" placeholder="Filtrar usuario o correo..." style="max-width:240px; padding:8px 12px;" />
+      <div class="admin-nav-tabs" id="adminNavTabs">
+        <button class="admin-nav-tab active" data-admin-tab="users">👥 Usuarios</button>
+        <button class="admin-nav-tab" data-admin-tab="schedule">📻 Programación</button>
+        <button class="admin-nav-tab" data-admin-tab="api">🔌 API</button>
+        <button class="admin-nav-tab" data-admin-tab="database">🗄️ Base de Datos</button>
+        <button class="admin-nav-tab" data-admin-tab="servers">🖥️ Servidores</button>
       </div>
 
-      <div class="admin-table-wrap">
-        <table class="admin-table">
-          <thead>
-            <tr>
-              <th>Usuario</th>
-              <th>Correo / ID</th>
-              <th>Método</th>
-              <th>Género fav.</th>
-              <th>Estado</th>
-              <th>Último acceso</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody id="adminUsersTableBody"></tbody>
-        </table>
+      <!-- SECCIÓN 1: USUARIOS -->
+      <div class="admin-section active" id="admin-sec-users">
+        <div class="admin-stats" id="adminStats"></div>
+
+        <div class="admin-toolbar">
+          <div class="filters" id="adminMethodFilters">
+            <button class="filter-pill active" data-method="ALL">Todos</button>
+            <button class="filter-pill" data-method="Google">Google</button>
+            <button class="filter-pill" data-method="Gmail">Gmail</button>
+            <button class="filter-pill" data-method="Invitado">Invitado</button>
+            <button class="filter-pill" data-method="Owner Key">Owner</button>
+          </div>
+          <input type="text" id="adminSearchInput" class="input-field" placeholder="Filtrar usuario o correo..." style="max-width:240px; padding:8px 12px;" />
+        </div>
+
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Usuario</th>
+                <th>Correo / ID</th>
+                <th>Método</th>
+                <th>Rol</th>
+                <th>Estado</th>
+                <th>Último acceso</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="adminUsersTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- SECCIÓN 2: PROGRAMACIÓN -->
+      <div class="admin-section" id="admin-sec-schedule">
+        <form class="schedule-form" id="scheduleForm">
+          <div class="input-group">
+            <label for="schedTimeInput">Horario</label>
+            <input type="text" id="schedTimeInput" class="input-field" placeholder="Ej: 18:00 - 20:00" required />
+          </div>
+          <div class="input-group">
+            <label for="schedTitleInput">Programa / Bloque</label>
+            <input type="text" id="schedTitleInput" class="input-field" placeholder="Ej: Cyber Sunset Mix" required />
+          </div>
+          <div class="input-group">
+            <label for="schedHostInput">DJ / Host</label>
+            <input type="text" id="schedHostInput" class="input-field" placeholder="Ej: DJ Jhoan" required />
+          </div>
+          <div class="input-group">
+            <label for="schedGenreInput">Género</label>
+            <input type="text" id="schedGenreInput" class="input-field" placeholder="Ej: Electrónica" required />
+          </div>
+          <div class="input-group">
+            <label for="schedStatusSelect">Estado</label>
+            <select id="schedStatusSelect" class="input-field">
+              <option value="En Vivo">En Vivo</option>
+              <option value="Programado">Programado</option>
+              <option value="Finalizado">Finalizado</option>
+            </select>
+          </div>
+          <button type="submit" class="btn-primary" style="padding:10px 16px; border-radius:10px; justify-content:center;" id="schedSubmitBtn">+ Agregar</button>
+        </form>
+
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Horario</th>
+                <th>Programa</th>
+                <th>DJ / Host</th>
+                <th>Género</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="scheduleTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- SECCIÓN 3: API -->
+      <div class="admin-section" id="admin-sec-api">
+        <div class="admin-stats">
+          <div class="stat-box"><div class="stat-label">Estado API</div><div class="stat-value" style="color:#4ade80;">200 OK</div></div>
+          <div class="stat-box"><div class="stat-label">Latencia Media</div><div class="stat-value">18 ms</div></div>
+          <div class="stat-box"><div class="stat-label">Peticiones / 24h</div><div class="stat-value" style="color:#93c5fd;">14,820</div></div>
+          <div class="stat-box"><div class="stat-label">Versión</div><div class="stat-value">v1.4.2</div></div>
+        </div>
+
+        <div class="profile-banner" style="justify-content:space-between; flex-wrap:wrap;">
+          <div>
+            <div class="stat-label">PulseMusic Public/Private API Key</div>
+            <code id="apiKeyDisplay" style="font-size:0.95rem; color:#ddd6fe;">pm_live_••••••••••••••••9f4b</code>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <button class="btn-ghost" id="toggleApiKeyBtn">👁️ Mostrar</button>
+            <button class="btn-ghost" id="copyApiKeyBtn">📋 Copiar</button>
+          </div>
+        </div>
+
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Método</th>
+                <th>Endpoint</th>
+                <th>Descripción</th>
+                <th>Estado</th>
+                <th>Prueba</th>
+              </tr>
+            </thead>
+            <tbody id="apiEndpointsBody"></tbody>
+          </table>
+        </div>
+        <pre class="code-console" id="apiConsoleOutput">// Haz clic en "Probar" en cualquier endpoint para ver la respuesta JSON en tiempo real...</pre>
+      </div>
+
+      <!-- SECCIÓN 4: BASE DE DATOS -->
+      <div class="admin-section" id="admin-sec-database">
+        <div class="admin-stats" id="dbStats"></div>
+        <div class="admin-toolbar">
+          <span style="font-size:0.86rem; color:var(--text-muted);">Motor: <strong style="color:var(--text-main);">PulseDB (JSON Storage Engine)</strong></span>
+          <div style="display:flex; gap:8px;">
+            <button class="btn-ghost" id="refreshDbBtn">🔄 Refrescar DB</button>
+            <button class="btn-primary" id="exportDbBtn" style="padding:8px 16px; font-size:0.84rem;">⬇️ Exportar JSON</button>
+          </div>
+        </div>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Tabla / Colección</th>
+                <th>Registros</th>
+                <th>Peso Estimado</th>
+                <th>Inspeccionar</th>
+              </tr>
+            </thead>
+            <tbody id="dbTablesBody"></tbody>
+          </table>
+        </div>
+        <pre class="code-console" id="dbConsoleOutput">// Selecciona "Ver JSON" en una tabla para inspeccionar los registros...</pre>
+      </div>
+
+      <!-- SECCIÓN 5: SERVIDORES -->
+      <div class="admin-section" id="admin-sec-servers">
+        <div class="admin-toolbar">
+          <span style="font-size:0.86rem; color:var(--text-muted);">Clúster global de streaming y autenticación</span>
+          <button class="btn-ghost" id="refreshServersBtn">🔄 Actualizar métricas</button>
+        </div>
+        <div class="server-grid" id="serverGrid"></div>
       </div>
     </div>
   </div>
@@ -1353,29 +1641,26 @@
     (function () {
       const OWNER_USERNAME = "jhoan";
       const OWNER_KEY = "ABCD-1234";
+      const ADMIN_GRANT_KEY = "LXH_MUSIC";
+
       const USERS_DB_KEY = "pulsemusic_users_db_v1";
       const SESSION_KEY = "pulsemusic_active_session_v1";
+      const OWNER_CLAIMED_KEY = "pulsemusic_owner_claimed_v1";
+      const SCHEDULE_DB_KEY = "pulsemusic_schedule_v1";
 
-      // Almacenamiento seguro (funciona incluso si localStorage está bloqueado)
+      const VERIFIED_SVG = `<span class="verified-badge" title="Cuenta Verificada"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"/></svg></span>`;
+
       const memoryStorage = {};
       function safeGet(key) {
-        try {
-          return window.localStorage.getItem(key);
-        } catch (e) {
-          return memoryStorage[key] || null;
-        }
+        try { return window.localStorage.getItem(key); } catch (e) { return memoryStorage[key] || null; }
       }
       function safeSet(key, val) {
         memoryStorage[key] = val;
-        try {
-          window.localStorage.setItem(key, val);
-        } catch (e) {}
+        try { window.localStorage.setItem(key, val); } catch (e) {}
       }
       function safeRemove(key) {
         delete memoryStorage[key];
-        try {
-          window.localStorage.removeItem(key);
-        } catch (e) {}
+        try { window.localStorage.removeItem(key); } catch (e) {}
       }
 
       const AVATAR_GRADIENTS = [
@@ -1386,7 +1671,6 @@
         "linear-gradient(135deg, #f59e0b, #ea580c)",
         "linear-gradient(135deg, #ec4899, #be185d)"
       ];
-
       const AVATAR_ICONS = ["INITIAL", "🎵", "🎧", "🔥", "⚡", "🎸", "🚀", "👑"];
 
       const userBadge = document.getElementById("userBadge");
@@ -1399,8 +1683,11 @@
 
       const authModal = document.getElementById("authModal");
       const closeAuthModal = document.getElementById("closeAuthModal");
+      const authTabsContainer = document.getElementById("authTabsContainer");
       const authTabs = document.querySelectorAll(".auth-tab");
       const authPanels = document.querySelectorAll(".auth-panel");
+      const ownerLoginTab = document.getElementById("ownerLoginTab");
+      const ownerLoginPanel = document.getElementById("panel-owner");
       const authError = document.getElementById("authError");
 
       const profileModal = document.getElementById("profileModal");
@@ -1427,17 +1714,56 @@
       const verifyOwnerKeyBtn = document.getElementById("verifyOwnerKeyBtn");
       const ownerKeyError = document.getElementById("ownerKeyError");
 
+      const adminGrantModal = document.getElementById("adminGrantModal");
+      const closeAdminGrantModal = document.getElementById("closeAdminGrantModal");
+      const adminGrantTitle = document.getElementById("adminGrantTitle");
+      const adminGrantSubtitle = document.getElementById("adminGrantSubtitle");
+      const adminGrantKeyInput = document.getElementById("adminGrantKeyInput");
+      const adminGrantError = document.getElementById("adminGrantError");
+      const confirmAdminGrantBtn = document.getElementById("confirmAdminGrantBtn");
+
       const adminModal = document.getElementById("adminModal");
       const closeAdminModal = document.getElementById("closeAdminModal");
+      const adminPanelHeaderRole = document.getElementById("adminPanelHeaderRole");
+      const adminNavTabs = document.querySelectorAll(".admin-nav-tab");
+      const adminSections = document.querySelectorAll(".admin-section");
       const adminStats = document.getElementById("adminStats");
       const adminUsersTableBody = document.getElementById("adminUsersTableBody");
       const adminSearchInput = document.getElementById("adminSearchInput");
       const adminFilterButtons = document.querySelectorAll("#adminMethodFilters .filter-pill");
 
+      const scheduleForm = document.getElementById("scheduleForm");
+      const schedTimeInput = document.getElementById("schedTimeInput");
+      const schedTitleInput = document.getElementById("schedTitleInput");
+      const schedHostInput = document.getElementById("schedHostInput");
+      const schedGenreInput = document.getElementById("schedGenreInput");
+      const schedStatusSelect = document.getElementById("schedStatusSelect");
+      const schedSubmitBtn = document.getElementById("schedSubmitBtn");
+      const scheduleTableBody = document.getElementById("scheduleTableBody");
+
+      const apiKeyDisplay = document.getElementById("apiKeyDisplay");
+      const toggleApiKeyBtn = document.getElementById("toggleApiKeyBtn");
+      const copyApiKeyBtn = document.getElementById("copyApiKeyBtn");
+      const apiEndpointsBody = document.getElementById("apiEndpointsBody");
+      const apiConsoleOutput = document.getElementById("apiConsoleOutput");
+
+      const dbStats = document.getElementById("dbStats");
+      const dbTablesBody = document.getElementById("dbTablesBody");
+      const dbConsoleOutput = document.getElementById("dbConsoleOutput");
+      const refreshDbBtn = document.getElementById("refreshDbBtn");
+      const exportDbBtn = document.getElementById("exportDbBtn");
+
+      const serverGrid = document.getElementById("serverGrid");
+      const refreshServersBtn = document.getElementById("refreshServersBtn");
+
       let currentAdminFilter = "ALL";
       let draftProfileColor = AVATAR_GRADIENTS[0];
       let draftProfileIcon = "INITIAL";
       let draftProfilePhoto = "";
+      let pendingRoleChange = null;
+      let editingScheduleId = null;
+      let apiKeyVisible = false;
+      const REAL_API_KEY = "pm_live_84c1a2e7b9034f569f4b";
 
       function formatNow() {
         return new Date().toLocaleString("es-ES", {
@@ -1447,6 +1773,10 @@
           hour: "2-digit",
           minute: "2-digit"
         });
+      }
+
+      function isPrivileged(role) {
+        return role === "Owner" || role === "Admin";
       }
 
       function getUsersDB() {
@@ -1464,7 +1794,7 @@
             email: "jhoan@pulsemusic.owner",
             method: "Owner Key",
             role: "Owner",
-            bio: "Creador de PulseMusic 👑",
+            bio: "Owner & Creador de PulseMusic 👑",
             favGenre: "Electrónica",
             avatarColor: AVATAR_GRADIENTS[1],
             avatarIcon: "👑",
@@ -1523,13 +1853,52 @@
         safeSet(USERS_DB_KEY, JSON.stringify(users));
       }
 
+      function getScheduleDB() {
+        const raw = safeGet(SCHEDULE_DB_KEY);
+        if (raw) {
+          try {
+            const parsed = JSON.parse(raw);
+            if (Array.isArray(parsed)) return parsed;
+          } catch (e) {}
+        }
+        const seed = [
+          { id: "sch-1", time: "08:00 - 11:00", title: "Morning Pulse", host: "DJ Jhoan", genre: "Pop / Chill", status: "Finalizado" },
+          { id: "sch-2", time: "11:00 - 14:00", title: "Top Hits Global", host: "María López", genre: "Pop / Urbano", status: "En Vivo" },
+          { id: "sch-3", time: "14:00 - 18:00", title: "Deep Focus Lo-Fi", host: "Lofi Boy", genre: "Lo-Fi", status: "Programado" },
+          { id: "sch-4", time: "18:00 - 22:00", title: "Neon Cyber Night", host: "Cyber Pulse", genre: "Electrónica", status: "Programado" }
+        ];
+        safeSet(SCHEDULE_DB_KEY, JSON.stringify(seed));
+        return seed;
+      }
+
+      function saveScheduleDB(list) {
+        safeSet(SCHEDULE_DB_KEY, JSON.stringify(list));
+      }
+
       function getCurrentSession() {
         const raw = safeGet(SESSION_KEY);
         if (!raw) return null;
-        try {
-          return JSON.parse(raw);
-        } catch (e) {
-          return null;
+        try { return JSON.parse(raw); } catch (e) { return null; }
+      }
+
+      function syncOwnerTabVisibility() {
+        const ownerClaimed = safeGet(OWNER_CLAIMED_KEY) === "1";
+        if (ownerClaimed) {
+          ownerLoginTab.style.display = "none";
+          ownerLoginPanel.style.display = "none";
+          ownerLoginTab.classList.remove("active");
+          ownerLoginPanel.classList.remove("active");
+          authTabsContainer.classList.add("three-cols");
+
+          const anyActive = Array.from(authTabs).some(t => t.classList.contains("active") && t.style.display !== "none");
+          if (!anyActive) {
+            authTabs[0].classList.add("active");
+            document.getElementById("panel-guest").classList.add("active");
+          }
+        } else {
+          ownerLoginTab.style.display = "";
+          ownerLoginPanel.style.display = "";
+          authTabsContainer.classList.remove("three-cols");
         }
       }
 
@@ -1546,16 +1915,18 @@
         );
         const existing = existingIdx !== -1 ? users[existingIdx] : {};
 
+        const finalRole = user.role === "Owner" ? "Owner" : (existing.role || user.role);
+
         const record = {
           id: existing.id || user.id,
           name: existing.name || user.name,
           email: user.email,
           method: user.method,
-          role: user.role,
+          role: finalRole,
           bio: existing.bio !== undefined ? existing.bio : (user.bio || ""),
           favGenre: existing.favGenre || user.favGenre || "Todo",
-          avatarColor: existing.avatarColor || user.avatarColor || (user.role === "Owner" ? AVATAR_GRADIENTS[1] : AVATAR_GRADIENTS[0]),
-          avatarIcon: existing.avatarIcon || user.avatarIcon || (user.role === "Owner" ? "👑" : "INITIAL"),
+          avatarColor: existing.avatarColor || user.avatarColor || (finalRole === "Owner" ? AVATAR_GRADIENTS[1] : AVATAR_GRADIENTS[0]),
+          avatarIcon: existing.avatarIcon || user.avatarIcon || (finalRole === "Owner" ? "👑" : "INITIAL"),
           avatarPhoto: existing.avatarPhoto || user.avatarPhoto || "",
           online: true,
           lastLogin: formatNow()
@@ -1565,6 +1936,11 @@
           users[existingIdx] = record;
         } else {
           users.unshift(record);
+        }
+
+        if (finalRole === "Owner") {
+          safeSet(OWNER_CLAIMED_KEY, "1");
+          syncOwnerTabVisibility();
         }
 
         saveUsersDB(users);
@@ -1617,10 +1993,15 @@
         }
 
         renderAvatarElement(userAvatar, session);
-        userNameEl.textContent = session.role === "Owner" ? `${session.name} (Owner)` : session.name;
+        const labelText = session.role === "Owner"
+          ? `${escapeHTML(session.name)} (Owner)`
+          : (session.role === "Admin" ? `${escapeHTML(session.name)} (Admin)` : escapeHTML(session.name));
+
+        userNameEl.innerHTML = labelText + (isPrivileged(session.role) ? VERIFIED_SVG : "");
         openAuthBtn.textContent = "👤 Mi Perfil";
       }
 
+      // Tabs Auth
       authTabs.forEach(tab => {
         tab.addEventListener("click", () => {
           authTabs.forEach(t => t.classList.remove("active"));
@@ -1632,6 +2013,7 @@
       });
 
       function openAuthModal() {
+        syncOwnerTabVisibility();
         authError.textContent = "";
         authModal.classList.add("open");
       }
@@ -1739,6 +2121,7 @@
         return "method-guest";
       }
 
+      // Perfil y Personalización
       function renderProfilePickers() {
         avatarColorPicker.innerHTML = AVATAR_GRADIENTS.map(grad => `
           <button type="button" class="color-swatch ${draftProfileColor === grad ? "selected" : ""}" style="background:${grad};" data-grad="${grad}"></button>
@@ -1779,7 +2162,9 @@
           avatarPhoto: draftProfilePhoto
         };
         renderAvatarElement(profilePreviewAvatar, previewUser);
-        profilePreviewName.textContent = session.role === "Owner" ? `${previewUser.name} (Owner)` : previewUser.name;
+
+        const roleTag = session.role === "Owner" ? " (Owner)" : (session.role === "Admin" ? " (Admin)" : "");
+        profilePreviewName.innerHTML = `${escapeHTML(previewUser.name + roleTag)}${isPrivileged(session.role) ? VERIFIED_SVG : ""}`;
         profilePreviewEmail.textContent = session.email;
         profilePreviewMethod.className = `method-badge ${getMethodBadgeClass(session.method)}`;
         profilePreviewMethod.textContent = session.method;
@@ -1879,16 +2264,28 @@
         openAuthModal();
       });
 
+      // Acceso Panel Admin (Owner o Admin)
       function tryOpenAdminPanel() {
         const session = getCurrentSession();
-        if (session && session.role === "Owner") {
-          renderAdminPanel();
-          adminModal.classList.add("open");
+        if (session && isPrivileged(session.role)) {
+          openFullAdminPanel();
         } else {
           ownerKeyError.textContent = "";
           verifyOwnerKeyInput.value = "";
           ownerKeyModal.classList.add("open");
         }
+      }
+
+      function openFullAdminPanel() {
+        const session = getCurrentSession();
+        const roleName = session ? `${escapeHTML(session.name)} (${escapeHTML(session.role)})` : "Jhoan (Owner)";
+        adminPanelHeaderRole.innerHTML = `Sesión autorizada: <strong style="color:#ddd6fe;">${roleName}</strong>${VERIFIED_SVG} | Control de plataforma`;
+        renderAdminPanel();
+        renderScheduleTable();
+        renderApiSection();
+        renderDatabaseSection();
+        renderServersSection();
+        adminModal.classList.add("open");
       }
 
       sidebarAdminBtn.addEventListener("click", tryOpenAdminPanel);
@@ -1909,12 +2306,56 @@
           role: "Owner"
         });
         ownerKeyModal.classList.remove("open");
-        renderAdminPanel();
-        adminModal.classList.add("open");
+        openFullAdminPanel();
       });
 
       closeAdminModal.addEventListener("click", () => adminModal.classList.remove("open"));
 
+      // Pestañas internas del Panel Admin
+      adminNavTabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+          adminNavTabs.forEach(t => t.classList.remove("active"));
+          adminSections.forEach(s => s.classList.remove("active"));
+          tab.classList.add("active");
+          document.getElementById(`admin-sec-${tab.dataset.adminTab}`).classList.add("active");
+        });
+      });
+
+      // Dar / Quitar Admin con Key LXH_MUSIC
+      closeAdminGrantModal.addEventListener("click", () => {
+        pendingRoleChange = null;
+        adminGrantModal.classList.remove("open");
+      });
+
+      confirmAdminGrantBtn.addEventListener("click", () => {
+        if (!pendingRoleChange) return;
+        const key = adminGrantKeyInput.value.trim();
+        if (key !== ADMIN_GRANT_KEY) {
+          adminGrantError.textContent = "Key de seguridad incorrecta. Acceso denegado.";
+          return;
+        }
+
+        const users = getUsersDB();
+        const idx = users.findIndex(u => u.id === pendingRoleChange.userId);
+        if (idx !== -1) {
+          users[idx].role = pendingRoleChange.newRole;
+          saveUsersDB(users);
+
+          const current = getCurrentSession();
+          if (current && current.id === users[idx].id) {
+            current.role = pendingRoleChange.newRole;
+            safeSet(SESSION_KEY, JSON.stringify(current));
+            updateTopbarUI();
+          }
+        }
+
+        pendingRoleChange = null;
+        adminGrantModal.classList.remove("open");
+        renderAdminPanel();
+        renderDatabaseSection();
+      });
+
+      // Filtros usuarios Admin
       adminFilterButtons.forEach(btn => {
         btn.addEventListener("click", () => {
           adminFilterButtons.forEach(b => b.classList.remove("active"));
@@ -1923,20 +2364,19 @@
           renderAdminPanel();
         });
       });
-
       adminSearchInput.addEventListener("input", renderAdminPanel);
 
       function renderAdminPanel() {
         const users = getUsersDB();
         const total = users.length;
         const onlineCount = users.filter(u => u.online).length;
-        const googleGmailCount = users.filter(u => u.method === "Google" || u.method === "Gmail").length;
+        const staffCount = users.filter(u => isPrivileged(u.role)).length;
         const guestCount = users.filter(u => u.method === "Invitado").length;
 
         adminStats.innerHTML = `
           <div class="stat-box"><div class="stat-label">Total Usuarios</div><div class="stat-value">${total}</div></div>
           <div class="stat-box"><div class="stat-label">En Línea</div><div class="stat-value" style="color:#4ade80;">${onlineCount}</div></div>
-          <div class="stat-box"><div class="stat-label">Google / Gmail</div><div class="stat-value" style="color:#93c5fd;">${googleGmailCount}</div></div>
+          <div class="stat-box"><div class="stat-label">Owner / Admins</div><div class="stat-value" style="color:#38bdf8;">${staffCount}</div></div>
           <div class="stat-box"><div class="stat-label">Invitados</div><div class="stat-value" style="color:#e4e4e7;">${guestCount}</div></div>
         `;
 
@@ -1960,18 +2400,50 @@
 
         adminUsersTableBody.innerHTML = filtered.map(u => {
           const isOwner = u.role === "Owner";
+          const isAdmin = u.role === "Admin";
+          const verified = isPrivileged(u.role) ? VERIFIED_SVG : "";
+
+          let roleBadge = `<span style="color:var(--text-muted);">${escapeHTML(u.role || "Usuario")}</span>`;
+          if (isOwner) roleBadge = `<span class="method-badge method-owner">Owner</span>`;
+          else if (isAdmin) roleBadge = `<span class="role-badge-admin">Admin</span>`;
+
+          let actionHtml = '<span style="color:var(--text-muted); font-size:0.78rem;">Protegido</span>';
+          if (!isOwner) {
+            const adminBtn = isAdmin
+              ? `<button class="btn-mini-accent" data-role-id="${escapeHTML(u.id)}" data-target-role="Usuario">Quitar Admin</button>`
+              : `<button class="btn-mini-accent" data-role-id="${escapeHTML(u.id)}" data-target-role="Admin">⚡ Dar Admin</button>`;
+            const delBtn = `<button class="btn-mini-danger" data-delete-id="${escapeHTML(u.id)}">Eliminar</button>`;
+            actionHtml = `<div style="display:flex; gap:6px;">${adminBtn}${delBtn}</div>`;
+          }
+
           return `
             <tr>
-              <td><strong>${escapeHTML(u.name)}</strong>${isOwner ? ' <span style="color:#c4b5fd; font-size:0.75rem;">(Owner)</span>' : ""}</td>
+              <td><strong>${escapeHTML(u.name)}</strong>${verified}</td>
               <td style="color:var(--text-muted);">${escapeHTML(u.email)}</td>
               <td><span class="method-badge ${getMethodBadgeClass(u.method)}">${escapeHTML(u.method)}</span></td>
-              <td style="color:var(--text-muted);">${escapeHTML(u.favGenre || "Todo")}</td>
+              <td>${roleBadge}</td>
               <td><span class="status-dot ${u.online ? "" : "offline"}">${u.online ? "En línea" : "Desconectado"}</span></td>
               <td style="color:var(--text-muted);">${escapeHTML(u.lastLogin)}</td>
-              <td>${isOwner ? '<span style="color:var(--text-muted); font-size:0.78rem;">Protegido</span>' : `<button class="btn-mini-danger" data-delete-id="${escapeHTML(u.id)}">Eliminar</button>`}</td>
+              <td>${actionHtml}</td>
             </tr>
           `;
         }).join("");
+
+        adminUsersTableBody.querySelectorAll("[data-role-id]").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const userId = btn.getAttribute("data-role-id");
+            const newRole = btn.getAttribute("data-target-role");
+            const targetUser = getUsersDB().find(u => u.id === userId);
+            if (!targetUser) return;
+
+            pendingRoleChange = { userId, newRole };
+            adminGrantTitle.textContent = newRole === "Admin" ? `⚡ Dar Admin a ${targetUser.name}` : `Quitar Admin a ${targetUser.name}`;
+            adminGrantSubtitle.textContent = "Ingresa la Key de seguridad para confirmar esta acción.";
+            adminGrantKeyInput.value = "";
+            adminGrantError.textContent = "";
+            adminGrantModal.classList.add("open");
+          });
+        });
 
         adminUsersTableBody.querySelectorAll("[data-delete-id]").forEach(btn => {
           btn.addEventListener("click", () => {
@@ -1984,9 +2456,217 @@
               updateTopbarUI();
             }
             renderAdminPanel();
+            renderDatabaseSection();
           });
         });
       }
+
+      // === SECCIÓN PROGRAMACIÓN ===
+      scheduleForm.addEventListener("submit", e => {
+        e.preventDefault();
+        const list = getScheduleDB();
+        const item = {
+          id: editingScheduleId || `sch-${Date.now()}`,
+          time: schedTimeInput.value.trim(),
+          title: schedTitleInput.value.trim(),
+          host: schedHostInput.value.trim(),
+          genre: schedGenreInput.value.trim(),
+          status: schedStatusSelect.value
+        };
+
+        if (editingScheduleId) {
+          const idx = list.findIndex(s => s.id === editingScheduleId);
+          if (idx !== -1) list[idx] = item;
+          editingScheduleId = null;
+          schedSubmitBtn.textContent = "+ Agregar";
+        } else {
+          list.push(item);
+        }
+
+        saveScheduleDB(list);
+        scheduleForm.reset();
+        renderScheduleTable();
+        renderDatabaseSection();
+      });
+
+      function renderScheduleTable() {
+        const list = getScheduleDB();
+        scheduleTableBody.innerHTML = list.map(s => {
+          const badgeClass = s.status === "En Vivo" ? "method-gmail" : (s.status === "Programado" ? "method-google" : "method-guest");
+          return `
+            <tr>
+              <td><strong>${escapeHTML(s.time)}</strong></td>
+              <td>${escapeHTML(s.title)}</td>
+              <td style="color:var(--text-muted);">${escapeHTML(s.host)}</td>
+              <td style="color:var(--text-muted);">${escapeHTML(s.genre)}</td>
+              <td><span class="method-badge ${badgeClass}">${escapeHTML(s.status)}</span></td>
+              <td>
+                <div style="display:flex; gap:6px;">
+                  <button class="btn-mini-accent" data-edit-sch="${escapeHTML(s.id)}">✏️ Editar</button>
+                  <button class="btn-mini-danger" data-del-sch="${escapeHTML(s.id)}">Eliminar</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join("");
+
+        scheduleTableBody.querySelectorAll("[data-edit-sch]").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const id = btn.getAttribute("data-edit-sch");
+            const found = getScheduleDB().find(x => x.id === id);
+            if (!found) return;
+            editingScheduleId = found.id;
+            schedTimeInput.value = found.time;
+            schedTitleInput.value = found.title;
+            schedHostInput.value = found.host;
+            schedGenreInput.value = found.genre;
+            schedStatusSelect.value = found.status;
+            schedSubmitBtn.textContent = "💾 Guardar";
+          });
+        });
+
+        scheduleTableBody.querySelectorAll("[data-del-sch]").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const id = btn.getAttribute("data-del-sch");
+            saveScheduleDB(getScheduleDB().filter(x => x.id !== id));
+            renderScheduleTable();
+            renderDatabaseSection();
+          });
+        });
+      }
+
+      // === SECCIÓN API ===
+      const API_ENDPOINTS = [
+        { method: "GET", path: "/api/v1/tracks", desc: "Lista de canciones recomendadas", status: "200 OK" },
+        { method: "GET", path: "/api/v1/schedule", desc: "Parrilla de programación en vivo", status: "200 OK" },
+        { method: "POST", path: "/api/v1/auth/session", desc: "Validación de sesión y roles", status: "200 OK" },
+        { method: "GET", path: "/api/v1/stream/status", desc: "Telemetría del motor de audio HD", status: "200 OK" }
+      ];
+
+      function renderApiSection() {
+        apiKeyDisplay.textContent = apiKeyVisible ? REAL_API_KEY : "pm_live_••••••••••••••••9f4b";
+        apiEndpointsBody.innerHTML = API_ENDPOINTS.map((ep, i) => `
+          <tr>
+            <td><span class="method-badge ${ep.method === "POST" ? "method-owner" : "method-google"}">${ep.method}</span></td>
+            <td><code>${ep.path}</code></td>
+            <td style="color:var(--text-muted);">${ep.desc}</td>
+            <td style="color:#4ade80;">${ep.status}</td>
+            <td><button class="btn-mini-accent" data-test-api="${i}">▶ Probar</button></td>
+          </tr>
+        `).join("");
+
+        apiEndpointsBody.querySelectorAll("[data-test-api]").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const ep = API_ENDPOINTS[Number(btn.getAttribute("data-test-api"))];
+            const payload = {
+              ok: true,
+              endpoint: ep.path,
+              timestamp: new Date().toISOString(),
+              latency_ms: Math.floor(11 + Math.random() * 19),
+              data: ep.path.includes("schedule")
+                ? getScheduleDB()
+                : (ep.path.includes("auth") ? { active_users: getUsersDB().filter(u => u.online).length } : { tracks_online: 3, bitrate: "320kbps" })
+            };
+            apiConsoleOutput.textContent = JSON.stringify(payload, null, 2);
+          });
+        });
+      }
+
+      toggleApiKeyBtn.addEventListener("click", () => {
+        apiKeyVisible = !apiKeyVisible;
+        toggleApiKeyBtn.textContent = apiKeyVisible ? "🙈 Ocultar" : "👁️ Mostrar";
+        renderApiSection();
+      });
+
+      copyApiKeyBtn.addEventListener("click", () => {
+        if (navigator.clipboard) navigator.clipboard.writeText(REAL_API_KEY).catch(() => {});
+        copyApiKeyBtn.textContent = "✅ Copiada";
+        setTimeout(() => { copyApiKeyBtn.textContent = "📋 Copiar"; }, 1600);
+      });
+
+      // === SECCIÓN BASE DE DATOS ===
+      function renderDatabaseSection() {
+        const users = getUsersDB();
+        const schedule = getScheduleDB();
+        const session = getCurrentSession();
+
+        const collections = [
+          { name: "users_db", key: USERS_DB_KEY, data: users, count: users.length },
+          { name: "schedule_db", key: SCHEDULE_DB_KEY, data: schedule, count: schedule.length },
+          { name: "active_session", key: SESSION_KEY, data: session || {}, count: session ? 1 : 0 }
+        ];
+
+        const totalBytes = collections.reduce((acc, c) => acc + JSON.stringify(c.data).length, 0);
+
+        dbStats.innerHTML = `
+          <div class="stat-box"><div class="stat-label">Colecciones</div><div class="stat-value">${collections.length}</div></div>
+          <div class="stat-box"><div class="stat-label">Registros Totales</div><div class="stat-value">${users.length + schedule.length}</div></div>
+          <div class="stat-box"><div class="stat-label">Uso de Almacenamiento</div><div class="stat-value">${(totalBytes / 1024).toFixed(2)} KB</div></div>
+          <div class="stat-box"><div class="stat-label">Integridad</div><div class="stat-value" style="color:#4ade80;">100%</div></div>
+        `;
+
+        dbTablesBody.innerHTML = collections.map((c, idx) => `
+          <tr>
+            <td><strong>${c.name}</strong> <span style="color:var(--text-muted); font-size:0.76rem;">(${c.key})</span></td>
+            <td>${c.count}</td>
+            <td style="color:var(--text-muted);">${(JSON.stringify(c.data).length / 1024).toFixed(2)} KB</td>
+            <td><button class="btn-mini-accent" data-inspect-db="${idx}">🔍 Ver JSON</button></td>
+          </tr>
+        `).join("");
+
+        dbTablesBody.querySelectorAll("[data-inspect-db]").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const col = collections[Number(btn.getAttribute("data-inspect-db"))];
+            dbConsoleOutput.textContent = JSON.stringify(col.data, null, 2);
+          });
+        });
+      }
+
+      refreshDbBtn.addEventListener("click", renderDatabaseSection);
+      exportDbBtn.addEventListener("click", () => {
+        const dump = {
+          exported_at: new Date().toISOString(),
+          users: getUsersDB(),
+          schedule: getScheduleDB(),
+          session: getCurrentSession()
+        };
+        const blob = new Blob([JSON.stringify(dump, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "pulsemusic-backup.json";
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+
+      // === SECCIÓN SERVIDORES ===
+      function renderServersSection() {
+        const nodes = [
+          { name: "Node-US-East (Primary)", region: "Virginia, USA", cpu: Math.floor(22 + Math.random() * 25), ram: Math.floor(42 + Math.random() * 18), ping: Math.floor(18 + Math.random() * 12), uptime: "99.99%" },
+          { name: "Node-LATAM-DR (Edge)", region: "Santo Domingo, DO", cpu: Math.floor(14 + Math.random() * 20), ram: Math.floor(31 + Math.random() * 15), ping: Math.floor(8 + Math.random() * 9), uptime: "99.98%" },
+          { name: "Node-EU-West (CDN)", region: "Frankfurt, DE", cpu: Math.floor(28 + Math.random() * 22), ram: Math.floor(48 + Math.random() * 16), ping: Math.floor(65 + Math.random() * 20), uptime: "99.95%" }
+        ];
+
+        serverGrid.innerHTML = nodes.map(n => `
+          <div class="server-card">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <strong>🖥️ ${n.name}</strong>
+              <span class="status-dot">Online</span>
+            </div>
+            <span style="font-size:0.8rem; color:var(--text-muted);">Región: ${n.region} • Uptime: ${n.uptime} • Ping: ${n.ping} ms</span>
+            <div>
+              <div style="display:flex; justify-content:space-between; font-size:0.8rem;"><span>CPU</span><span>${n.cpu}%</span></div>
+              <div class="meter-bar"><div class="meter-fill" style="width:${n.cpu}%;"></div></div>
+            </div>
+            <div>
+              <div style="display:flex; justify-content:space-between; font-size:0.8rem;"><span>Memoria RAM</span><span>${n.ram}%</span></div>
+              <div class="meter-bar"><div class="meter-fill" style="width:${n.ram}%;"></div></div>
+            </div>
+          </div>
+        `).join("");
+      }
+
+      refreshServersBtn.addEventListener("click", renderServersSection);
 
       function escapeHTML(str) {
         return String(str)
@@ -1997,13 +2677,16 @@
           .replace(/'/g, "&#39;");
       }
 
-      [authModal, profileModal, ownerKeyModal, adminModal].forEach(modal => {
+      [authModal, profileModal, ownerKeyModal, adminGrantModal, adminModal].forEach(modal => {
         modal.addEventListener("click", e => {
           if (e.target === modal) modal.classList.remove("open");
         });
       });
 
+      // Inicialización
       getUsersDB();
+      getScheduleDB();
+      syncOwnerTabVisibility();
       updateTopbarUI();
       if (!getCurrentSession()) {
         openAuthModal();
